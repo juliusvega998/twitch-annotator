@@ -1,0 +1,25 @@
+{
+  "name": "twitch-annotator",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kintetsu998/twitch-annotator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kintetsu998/twitch-annotator/issues"
+  },
+  "homepage": "https://github.com/kintetsu998/twitch-annotator#readme",
+  "dependencies": {
+    "natural": "^0.4.0",
+    "nlp-compromise": "^6.6.0-alpha1",
+    "superagent": "^2.3.0"
+  }
+}
