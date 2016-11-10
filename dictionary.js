@@ -16,6 +16,9 @@ module.exports = {
 	],
 	abbreviated: [
 		{
+			short: 'af',
+			long: 'as fuck',
+		},{
 			short: 'brb',
 			long: 'be right back',
 		},{
@@ -64,6 +67,12 @@ module.exports = {
 			short: 'omg',
 			long: 'oh my god',
 		},{
+			short: 'omfg',
+			long: 'oh my fucking god',
+		},{
+			short: 'pls',
+			long: 'please',
+		},{
 			short: 'roflmao',
 			long: 'rolling on the floor laughing my ass off',
 		},{
@@ -76,5 +85,13 @@ module.exports = {
 			short: 'wth',
 			long: 'what the hell',
 		}
+	],
+	swears: [
+		'fuck',
+		'fucking',
+		'fuckin',
+		'shit',
+		'goddamn',
+		'damn'
 	]
 }

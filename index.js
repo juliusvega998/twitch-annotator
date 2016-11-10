@@ -25,14 +25,24 @@ const preprocess = (msg) => {
 	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
 	let nonAlphaNumPattern = /[^a-zA-Z0-9 ]+/g;
 
+	let oldMsg = msg.slice();
+
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
+
+	msg = normalize(msg);
+	msg = toExtend(msg);
+
 	msg = removePattern(msg, nonAlphaNumPattern);
+
 	msg = toLower(msg);
+
 	msg = changeAbbrev(msg);
 	msg = removeNounAndArticles(msg);
 
-	console.log(msg);
+	for(let i=0; i < msg.length; i++) {
+		console.log("new: " + msg[i] + "\nold: " + oldMsg[i] + "\n");
+	}
 }
 
 const removePattern = (msg, pattern) => {
@@ -44,6 +54,22 @@ const removePattern = (msg, pattern) => {
 	}
 
 	return msg2;
+}
+
+const normalize = (msg) => {
+	for(let i=0; i < msg.length; i++) {
+		msg[i] = nlp.text(msg[i]).root();
+	}
+
+	return msg;
+}
+
+const toExtend = (msg) => {
+	for(let i=0; i < msg.length; i++) {
+		msg[i] = nlp.text(msg[i]).contractions.expand().text();
+	}
+
+	return msg;
 }
 
 const toLower = (msg) => {
@@ -102,11 +128,21 @@ const removeNounAndArticles = (msg) => {
 							words2.push(words[j]);
 						}
 					}
+
+					for(let k=0; k < dict.swears.length; k++) {
+						if(words[j] === dict.swears[k]){
+							words2.push(words[j]);
+						}
+					}
 				} else if(tag[0][0] === 'Person') {
 					continue;
 				} else if(tag[0][0] === 'Pronoun') {
 					continue;
+				} else if(tag[0][0] === 'Place') {
+					continue;
 				} else if(tag[0][0] === 'Demonym') {
+					continue;
+				} else if(tag[0][0] === 'Determiner') {
 					continue;
 				} else if(tag[0][0] === 'Value') {
 					continue;
