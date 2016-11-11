@@ -6,6 +6,7 @@ const nlp = require('nlp_compromise');
 const dict = require(__dirname + '/dictionary')
 const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 const video_id = '83400929';
+const MAX_ITER = 10000;
 
 const start = () => {
 	gatherTimePeriod();
@@ -17,15 +18,46 @@ const gatherTimePeriod = () => {
 		.end((err, res) => {
 			if(err){
 				let toks = res.body.errors[0].detail.split(' ');
-				gatherMsgs({start: toks[4], end: toks[6]});
+				console.time("getMsg");
+				let msg = gatherMsgs([], parseInt(toks[4]), parseInt(toks[6]), 0);
 			}
 		});
 }
 
-const gatherMsgs = (time) => {
+const gatherMsgs = (msg, i, end, iter) => {
+	if(i == end) {
+		console.timeEnd("getMsg");
+		return msg;
+	} else if(iter >= MAX_ITER) {
+		console.log("Maximum tries reached.");
+		console.timeEnd("getMsg");
+		return msg;
+	} else {
+		request
+			.get(url.replace("VIDID", video_id).replace("TIME", i))
+			.end((err, res) => {
+				if(err){
+					if(res) {
+						console.log(res.body.errors[0].detail);
+						return gatherMsgs(msg, i, end, iter+1);
+					} else {
+						console.log(err);
+						return gatherMsgs(msg, i, end, iter+1);
+					}
+					return msg;
+				} else {
+					msg = msg.concat(getMessage(res.body));
+					console.log(msg.length);
+					return gatherMsgs(msg, i+1, end, 0);
+				}
+			});
+	}
+}
+
+/*const gatherMsgs = (time) => {
 	let msg = [];
 
-	/*for(let i=time.start; i < time.end; i++){
+	for(let i=time.start; i < time.end; i++){
 		request
 			.get(url.replace("VIDID", video_id).replace("TIME", i))
 			.end((err, res) => {
@@ -39,7 +71,7 @@ const gatherMsgs = (time) => {
 					}
 				}
 			});
-	}*/
+	}
 
 	request
 		.get(url.replace("VIDID", video_id).replace("TIME", time.start))
@@ -51,7 +83,7 @@ const gatherMsgs = (time) => {
 				process(res.body);
 			}
 		});
-}
+}*/
 
 const process = (body) => {
 	let msg = getMessage(body);
