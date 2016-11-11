@@ -20,6 +20,7 @@
   "dependencies": {
     "natural": "^0.4.0",
     "nlp_compromise": "^6.5.3",
-    "superagent": "^2.3.0"
+    "superagent": "^2.3.0",
+    "sync-request": "^3.0.1"
   }
 }

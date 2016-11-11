@@ -1,8 +1,57 @@
 'use strict';
 
 const request = require('superagent');
+const http = require('http');
 const nlp = require('nlp_compromise');
 const dict = require(__dirname + '/dictionary')
+const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
+const video_id = '83400929';
+
+const start = () => {
+	gatherTimePeriod();
+}
+
+const gatherTimePeriod = () => {
+	request
+		.get(url.replace("VIDID", video_id).replace("TIME", 0))
+		.end((err, res) => {
+			if(err){
+				let toks = res.body.errors[0].detail.split(' ');
+				gatherMsgs({start: toks[4], end: toks[6]});
+			}
+		});
+}
+
+const gatherMsgs = (time) => {
+	let msg = [];
+
+	/*for(let i=time.start; i < time.end; i++){
+		request
+			.get(url.replace("VIDID", video_id).replace("TIME", i))
+			.end((err, res) => {
+				if(err){
+					console.log(JSON.stringify(err));
+					process.exit(1);
+				} else {
+					msg.concat(getMessage(res.body));
+					if(i + 1 == time.end) {
+						console.log(msg.length);
+					}
+				}
+			});
+	}*/
+
+	request
+		.get(url.replace("VIDID", video_id).replace("TIME", time.start))
+		.end((err, res) => {
+			if(err){
+				console.log(JSON.stringify(err));
+				process.exit(1);
+			} else {
+				process(res.body);
+			}
+		});
+}
 
 const process = (body) => {
 	let msg = getMessage(body);
@@ -25,24 +74,27 @@ const preprocess = (msg) => {
 	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
 	let nonAlphaNumPattern = /[^a-zA-Z0-9 ]+/g;
 
+	//msg = ['OMFG ROFLMAO WTF IS HAPPENING LOL']
+
 	let oldMsg = msg.slice();
 
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
-
-	msg = normalize(msg);
+	msg = toLower(msg);
+	msg = changeAbbrev(msg);
 	msg = toExtend(msg);
-
 	msg = removePattern(msg, nonAlphaNumPattern);
 
-	msg = toLower(msg);
-
-	msg = changeAbbrev(msg);
+	msg = normalize(msg);
 	msg = removeNounAndArticles(msg);
 
 	for(let i=0; i < msg.length; i++) {
 		console.log("new: " + msg[i] + "\nold: " + oldMsg[i] + "\n");
 	}
+
+	console.log("Length: " + msg.length);
+
+	//console.log(JSON.stringify(nlp.text('its happening').tags()));
 }
 
 const removePattern = (msg, pattern) => {
@@ -88,8 +140,8 @@ const changeAbbrev = (msg) => {
 	for(let i=0; i < msg.length; i++) {
 		let words = msg[i].split(' ');
 		let words2 = [];
-		let replaced = false;
 		for(let j=0; j < words.length; j++) {
+			let replaced = false;
 			for(let k=0; k < dict.abbreviated.length; k++) {
 				if(words[j] === dict.abbreviated[k].short) {
 					words2.push(dict.abbreviated[k].long);
@@ -136,6 +188,8 @@ const removeNounAndArticles = (msg) => {
 					}
 				} else if(tag[0][0] === 'Person') {
 					continue;
+				} else if(tag[0][0] === 'Possessive') {
+					continue;
 				} else if(tag[0][0] === 'Pronoun') {
 					continue;
 				} else if(tag[0][0] === 'Place') {
@@ -160,11 +214,4 @@ const removeNounAndArticles = (msg) => {
 	return msg2;
 }
 
-request
-	.get('https://rechat.twitch.tv/rechat-messages?start=1471106708&video_id=v83400929')
-	.end((err, res) => {
-		if(err)
-			console.log(JSON.stringify(err));
-		else
-			process(res.body);
-	});
+start();

@@ -76,6 +76,9 @@ module.exports = {
 			short: 'roflmao',
 			long: 'rolling on the floor laughing my ass off',
 		},{
+			short: 'smth',
+			long: 'something',
+		},{
 			short: 'thx',
 			long: 'thanks',
 		},{
