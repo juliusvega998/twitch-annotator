@@ -8,15 +8,19 @@ const dict = require(__dirname + '/dictionary')
 
 const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 const video_id = '99986788';
+
 const MAX_ITER = 10000;
 const TIME_OUT = 500;
+const INCREMENT = 30;
 
 let msgs = [];
 let done = false;
 
 const start = () => {
+	fs.writeFile('message.txt', '');
+
 	gatherTimePeriod();
-	extract();
+	extract(0);
 }
 
 const gatherTimePeriod = () => {
@@ -25,13 +29,15 @@ const gatherTimePeriod = () => {
 		.end((err, res) => {
 			if(err){
 				let toks = res.body.errors[0].detail.split(' ');
+				mark = parseInt(toks[4]);
 				gatherMsgs(parseInt(toks[4]), parseInt(toks[6]), 0);
 				//gatherMsg(parseInt(toks[4]), parseInt(toks[6]), 0);
 			}
 		});
 }
+
 const gatherMsgs = (i, end, iter) => {
-	if(i == end) {
+	if(i >= end) {
 		done = true;
 	} else if(iter >= MAX_ITER) {
 		done = true;
@@ -51,7 +57,7 @@ const gatherMsgs = (i, end, iter) => {
 					}, TIME_OUT);
 				} else {
 					msgs = msgs.concat(getMessage(res.body));
-					gatherMsgs(i+1, end, 0);
+					gatherMsgs(i+INCREMENT, end, 0);
 				}
 			});
 	}
@@ -71,7 +77,16 @@ const gatherMsg = (i, end, iter) => {
 					gatherMsgs(i, end, iter+1);
 				}, TIME_OUT);
 			} else {
-				msgs = msgs.concat(getMessage(res.body));
+				let msgs2 = getMessage(res.body);
+				if(msgs2) {
+					msgs = msgs.concat(msgs2);
+					fs.appendFile('time.txt', "\n", function(err) {
+						if(err) {
+							console.log(err);
+						}
+					});
+				}
+
 				done = true;
 			}
 		});
@@ -81,23 +96,23 @@ const getMessage = (body) => {
 	let msg = [];
 
 	for(let i=0; i < body.data.length; i++) {
-		if(!body.data[i].attributes.deleted)
+		if(!body.data[i].attributes.deleted) {
 			msg.push(body.data[i].attributes.message);
+		}
 	}
 
 	return msg;
 }
 
-const extract = () => {
-	let msg = msgs.shift();
-
+const extract = (i) => {
 	if(msgs.length) {
+		let msg = msgs.shift();
 		process(msg);
-		extract();
+		extract(i+1);
 	} else {
 		if(!done) {
 			setTimeout(() => {
-				extract();
+				extract(i);
 			}, TIME_OUT);
 		}
 	}
@@ -114,7 +129,6 @@ const preprocess = (msg) => {
 
 	let oldMsg = msg;
 	let str = "";
-	
 
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
@@ -133,7 +147,7 @@ const preprocess = (msg) => {
 		if(err) {
 			console.log(err);
 		} else {
-			console.log(str + msgs.length);
+			console.log(str);
 		}
 	});
 }
