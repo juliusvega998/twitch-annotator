@@ -3,13 +3,20 @@
 const request = require('superagent');
 const http = require('http');
 const nlp = require('nlp_compromise');
+const fs = require('fs');
 const dict = require(__dirname + '/dictionary')
+
 const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
-const video_id = '83400929';
+const video_id = '99986788';
 const MAX_ITER = 10000;
+const TIME_OUT = 500;
+
+let msgs = [];
+let done = false;
 
 const start = () => {
 	gatherTimePeriod();
+	extract();
 }
 
 const gatherTimePeriod = () => {
@@ -18,20 +25,17 @@ const gatherTimePeriod = () => {
 		.end((err, res) => {
 			if(err){
 				let toks = res.body.errors[0].detail.split(' ');
-				console.time("getMsg");
-				let msg = gatherMsgs([], parseInt(toks[4]), parseInt(toks[6]), 0);
+				gatherMsgs(parseInt(toks[4]), parseInt(toks[6]), 0);
+				//gatherMsg(parseInt(toks[4]), parseInt(toks[6]), 0);
 			}
 		});
 }
-
-const gatherMsgs = (msg, i, end, iter) => {
+const gatherMsgs = (i, end, iter) => {
 	if(i == end) {
-		console.timeEnd("getMsg");
-		return msg;
+		done = true;
 	} else if(iter >= MAX_ITER) {
+		done = true;
 		console.log("Maximum tries reached.");
-		console.timeEnd("getMsg");
-		return msg;
 	} else {
 		request
 			.get(url.replace("VIDID", video_id).replace("TIME", i))
@@ -39,55 +43,38 @@ const gatherMsgs = (msg, i, end, iter) => {
 				if(err){
 					if(res) {
 						console.log(res.body.errors[0].detail);
-						return gatherMsgs(msg, i, end, iter+1);
 					} else {
 						console.log(err);
-						return gatherMsgs(msg, i, end, iter+1);
 					}
-					return msg;
+					setTimeout(() => {
+						gatherMsgs(i, end, iter+1);
+					}, TIME_OUT);
 				} else {
-					msg = msg.concat(getMessage(res.body));
-					console.log(msg.length);
-					return gatherMsgs(msg, i+1, end, 0);
+					msgs = msgs.concat(getMessage(res.body));
+					gatherMsgs(i+1, end, 0);
 				}
 			});
 	}
 }
 
-/*const gatherMsgs = (time) => {
-	let msg = [];
-
-	for(let i=time.start; i < time.end; i++){
-		request
-			.get(url.replace("VIDID", video_id).replace("TIME", i))
-			.end((err, res) => {
-				if(err){
-					console.log(JSON.stringify(err));
-					process.exit(1);
-				} else {
-					msg.concat(getMessage(res.body));
-					if(i + 1 == time.end) {
-						console.log(msg.length);
-					}
-				}
-			});
-	}
-
+const gatherMsg = (i, end, iter) => {
 	request
-		.get(url.replace("VIDID", video_id).replace("TIME", time.start))
+		.get(url.replace("VIDID", video_id).replace("TIME", i))
 		.end((err, res) => {
 			if(err){
-				console.log(JSON.stringify(err));
-				process.exit(1);
+				if(res) {
+					console.log(res.body.errors[0].detail);
+				} else {
+					console.log(err);
+				}
+				setTimeout(() => {
+					gatherMsgs(i, end, iter+1);
+				}, TIME_OUT);
 			} else {
-				process(res.body);
+				msgs = msgs.concat(getMessage(res.body));
+				done = true;
 			}
 		});
-}*/
-
-const process = (body) => {
-	let msg = getMessage(body);
-	msg = preprocess(msg);
 }
 
 const getMessage = (body) => {
@@ -101,149 +88,160 @@ const getMessage = (body) => {
 	return msg;
 }
 
+const extract = () => {
+	let msg = msgs.shift();
+
+	if(msgs.length) {
+		process(msg);
+		extract();
+	} else {
+		if(!done) {
+			setTimeout(() => {
+				extract();
+			}, TIME_OUT);
+		}
+	}
+}
+
+const process = (msg) => {
+	preprocess(msg);
+}
+
 const preprocess = (msg) => {
 	let usernamePattern = /@[A-Za-z0-9]+/g;
 	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
 	let nonAlphaNumPattern = /[^a-zA-Z0-9 ]+/g;
 
-	//msg = ['OMFG ROFLMAO WTF IS HAPPENING LOL']
-
-	let oldMsg = msg.slice();
+	let oldMsg = msg;
+	let str = "";
+	
 
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
 	msg = toLower(msg);
+
 	msg = changeAbbrev(msg);
 	msg = toExtend(msg);
 	msg = removePattern(msg, nonAlphaNumPattern);
 
-	msg = normalize(msg);
 	msg = removeNounAndArticles(msg);
+	msg = normalize(msg);
 
-	for(let i=0; i < msg.length; i++) {
-		console.log("new: " + msg[i] + "\nold: " + oldMsg[i] + "\n");
-	}
+	str = "new: " + msg + "\nold: " + oldMsg + "\n\n";
 
-	console.log("Length: " + msg.length);
-
-	//console.log(JSON.stringify(nlp.text('its happening').tags()));
+	fs.appendFile('message.txt', str, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(str + msgs.length);
+		}
+	});
 }
 
 const removePattern = (msg, pattern) => {
-	let msg2 = [];
-	
-	for(let i=0; i < msg.length; i++) {
-		let str = msg[i].replace(pattern, '');
-		msg2.push(str);
-	}
-
-	return msg2;
+	return msg.replace(pattern, '');
 }
 
 const normalize = (msg) => {
-	for(let i=0; i < msg.length; i++) {
-		msg[i] = nlp.text(msg[i]).root();
+	let words = msg.split(' ');
+	let words2 = [];
+
+	for(let i=0; i < words.length; i++) {
+		let isEmoticon = false;
+		for(let j=0; j < dict.emoticons.length; j++) {
+			if(words[i] === dict.emoticons[j]){
+				words2.push(words[i]);
+				isEmoticon = true;
+			}
+		}
+
+		if(!isEmoticon) {
+			words2.push(nlp.text(words[i]).root());
+		}
 	}
 
-	return msg;
+	return words2.join(' ');
 }
 
 const toExtend = (msg) => {
-	for(let i=0; i < msg.length; i++) {
-		msg[i] = nlp.text(msg[i]).contractions.expand().text();
-	}
-
-	return msg;
+	return nlp.text(msg).contractions.expand().text();
 }
 
 const toLower = (msg) => {
-	let msg2 = [];
-	
-	for(let i=0; i < msg.length; i++) {
-		msg2.push(msg[i].toLowerCase());
-	}
-
-	return msg2;
+	return msg.toLowerCase();
 }
 
 const changeAbbrev = (msg) => {
-	let msg2 = [];
-
-	for(let i=0; i < msg.length; i++) {
-		let words = msg[i].split(' ');
-		let words2 = [];
-		for(let j=0; j < words.length; j++) {
-			let replaced = false;
-			for(let k=0; k < dict.abbreviated.length; k++) {
-				if(words[j] === dict.abbreviated[k].short) {
-					words2.push(dict.abbreviated[k].long);
-					replaced = true;
-					break;
-				}
-			}
-
-			if(!replaced) {
-				words2.push(words[j]);
+	let words = msg.split(' ');
+	let words2 = [];
+	for(let j=0; j < words.length; j++) {
+		let replaced = false;
+		for(let k=0; k < dict.abbreviated.length; k++) {
+			if(words[j] === dict.abbreviated[k].short) {
+				words2.push(dict.abbreviated[k].long);
+				replaced = true;
+				break;
 			}
 		}
 
-		msg2.push(words2.join(' '));
+		if(!replaced) {
+			words2.push(words[j]);
+		}
 	}
 
-	return msg2;
+	return words2.join(' ');
 }
 
 const removeNounAndArticles = (msg) => {
-	let msg2 = [];
+	let words = msg.split(' ');
+	let words2 = [];
 
-	for(let i=0; i<msg.length; i++) {
-		let words = msg[i].split(' ');
-		let words2 = [];
+	for(let j=0; j<words.length; j++) {
+		let tag = nlp.text(words[j]).tags();
 
-		for(let j=0; j<words.length; j++) {
-			let tag = nlp.text(words[j]).tags();
-
-			if(tag[0]){
-				if(tag[0][0] === 'Determiner') {
-					continue;
-				} else if(tag[0][0] === "Noun") {
-					for(let k=0; k < dict.emoticons.length; k++) {
-						if(words[j] === dict.emoticons[k]){
-							words2.push(words[j]);
-						}
+		if(tag[0]){
+			if(tag[0][0] === 'Determiner') {
+				continue;
+			} else if(tag[0][0] === "Noun") {
+				for(let k=0; k < dict.emoticons.length; k++) {
+					if(words[j] === dict.emoticons[k]){
+						words2.push(words[j]);
 					}
-
-					for(let k=0; k < dict.swears.length; k++) {
-						if(words[j] === dict.swears[k]){
-							words2.push(words[j]);
-						}
-					}
-				} else if(tag[0][0] === 'Person') {
-					continue;
-				} else if(tag[0][0] === 'Possessive') {
-					continue;
-				} else if(tag[0][0] === 'Pronoun') {
-					continue;
-				} else if(tag[0][0] === 'Place') {
-					continue;
-				} else if(tag[0][0] === 'Demonym') {
-					continue;
-				} else if(tag[0][0] === 'Determiner') {
-					continue;
-				} else if(tag[0][0] === 'Value') {
-					continue;
-				} else {
-					words2.push(words[j]);
 				}
+
+				for(let k=0; k < dict.swears.length; k++) {
+					if(words[j] === dict.swears[k]){
+						words2.push(words[j]);
+					}
+				}
+			} else if(tag[0][0] === 'Person') {
+				continue;
+			} else if(tag[0][0] === 'Possessive') {
+				continue;
+			} else if(tag[0][0] === 'Pronoun') {
+				continue;
+			} else if(tag[0][0] === 'Place') {
+				continue;
+			} else if(tag[0][0] === 'Demonym') {
+				continue;
+			} else if(tag[0][0] === 'Determiner') {
+				continue;
+			} else if(tag[0][0] === 'Value') {
+				for(let k=0; k < dict.emoticons.length; k++) {
+					if(words[j] === dict.emoticons[k]){
+						words2.push(words[j]);
+					}
+				}
+			} else {
+				words2.push(words[j]);
 			}
 		}
-
-		msg2.push(words2.filter((element) => {
-			return element
-		}).join(' '));
 	}
 
-	return msg2;
+	return words2.filter((element) => {
+		return element
+	}).join(' ');
 }
 
 start();
+//process('4Head');
