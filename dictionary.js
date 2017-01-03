@@ -19,6 +19,9 @@ module.exports = {
 			short: 'af',
 			long: 'as fuck',
 		},{
+			short: 'afk',
+			long: 'away from keyboard',
+		},{
 			short: 'brb',
 			long: 'be right back',
 		},{
@@ -73,6 +76,9 @@ module.exports = {
 			short: 'pls',
 			long: 'please',
 		},{
+			short: 'rn',
+			long: 'right now',
+		},{
 			short: 'roflmao',
 			long: 'rolling on the floor laughing my ass off',
 		},{
@@ -81,6 +87,15 @@ module.exports = {
 		},{
 			short: 'thx',
 			long: 'thanks',
+		},{
+			short: 'tfw',
+			long: 'that feel when',
+		},{
+			short: 'tmw',
+			long: 'that moment when',
+		},{
+			short: 'vs',
+			long: 'versus',
 		},{
 			short: 'wtf',
 			long: 'what the fuck',

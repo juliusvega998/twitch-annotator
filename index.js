@@ -7,17 +7,18 @@ const fs = require('fs');
 const dict = require(__dirname + '/dictionary')
 
 const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
-const video_id = '99986788';
+const video_id = '111312545';
 
 const MAX_ITER = 10000;
 const TIME_OUT = 500;
 const INCREMENT = 30;
+const FILE_NAME = 'nightblue3.txt';
 
 let msgs = [];
 let done = false;
 
 const start = () => {
-	fs.writeFile('message.txt', '');
+	fs.writeFile(FILE_NAME, '');
 
 	gatherTimePeriod();
 	extract(0);
@@ -29,9 +30,7 @@ const gatherTimePeriod = () => {
 		.end((err, res) => {
 			if(err){
 				let toks = res.body.errors[0].detail.split(' ');
-				mark = parseInt(toks[4]);
 				gatherMsgs(parseInt(toks[4]), parseInt(toks[6]), 0);
-				//gatherMsg(parseInt(toks[4]), parseInt(toks[6]), 0);
 			}
 		});
 }
@@ -119,7 +118,14 @@ const extract = (i) => {
 }
 
 const process = (msg) => {
-	preprocess(msg);
+	//preprocess(msg);
+	fs.appendFile(FILE_NAME, msg + '\n', function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(msg)
+		}
+	});
 }
 
 const preprocess = (msg) => {
@@ -143,13 +149,12 @@ const preprocess = (msg) => {
 
 	str = "new: " + msg + "\nold: " + oldMsg + "\n\n";
 
-	fs.appendFile('message.txt', str, function(err) {
+	/*fs.appendFile('message.txt', str, function(err) {
 		if(err) {
 			console.log(err);
-		} else {
-			console.log(str);
 		}
-	});
+	});*/
+	console.log(str);
 }
 
 const removePattern = (msg, pattern) => {
@@ -240,6 +245,16 @@ const removeNounAndArticles = (msg) => {
 				continue;
 			} else if(tag[0][0] === 'Determiner') {
 				continue;
+			} else if(tag[0][0] === 'Plural') {
+				continue;
+			} else if(tag[0][0] === 'Country') {
+				continue;
+			} else if(tag[0][0] === 'MalePerson') {
+				continue;
+			} else if(tag[0][0] === 'FemalePerson') {
+				continue;
+			} else if(tag[0][0] === 'Organization') {
+				continue;
 			} else if(tag[0][0] === 'Value') {
 				for(let k=0; k < dict.emoticons.length; k++) {
 					if(words[j] === dict.emoticons[k]){
@@ -249,6 +264,8 @@ const removeNounAndArticles = (msg) => {
 			} else {
 				words2.push(words[j]);
 			}
+
+			console.log(tag[0][0] + ' ' + words[j]);
 		}
 	}
 
@@ -258,4 +275,3 @@ const removeNounAndArticles = (msg) => {
 }
 
 start();
-//process('4Head');
