@@ -1,0 +1,19 @@
+{
+  "name": "twitch-annotator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliusvega998/twitch-annotator.git"
+  },
+  "author": "juliusvega998",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juliusvega998/twitch-annotator/issues"
+  },
+  "homepage": "https://github.com/juliusvega998/twitch-annotator#readme"
+}
