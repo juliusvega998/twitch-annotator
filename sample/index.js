@@ -17,12 +17,10 @@ const FILE_NAME = [__dirname + '/raw/lol.txt', __dirname + '/raw/dota2.txt', __d
 let msgs = [];
 let done = false;
 
-const start = () => {
-	for(let i=0; i<3; i++) {
-		fs.writeFile(FILE_NAME[i], '');
-		gatherTimePeriod(i);
-		extract(0, i);
-	}
+const start = (i) => {
+	fs.writeFile(FILE_NAME[i], '');
+	gatherTimePeriod(i);
+	extract(0, i);
 }
 
 const gatherTimePeriod = (i) => {
@@ -260,4 +258,4 @@ const removeNounAndArticles = (msg) => {
 	}).join(' ');
 }
 
-start();
+start(2);
