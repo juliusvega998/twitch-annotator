@@ -108,8 +108,9 @@ const preprocess = (msg, file) => {
 	let oldMsg = msg;
 	let str = "";
 
-	msg = removePattern(msg, usernamePattern);
-	msg = removePattern(msg, commandPattern);
+	msg = replacePattern(msg, '[USERNAME]', usernamePattern);
+	msg = replacePattern(msg, '[URL]', urlPattern);
+	msg =  removePattern(msg, commandPattern);
 
 	if(msg) {
 		fs.appendFile(FILE_NAME[file], msg + '\n', function(err) {
@@ -121,7 +122,10 @@ const preprocess = (msg, file) => {
 		});
 	}
 
-	/*msg = removePattern(msg, urlPattern);
+	/*
+	msg = removePattern(msg, usernamePattern);
+	msg = removePattern(msg, commandPattern);
+	msg = removePattern(msg, urlPattern);
 	msg = toLower(msg);
 
 	msg = changeAbbrev(msg);
@@ -130,19 +134,15 @@ const preprocess = (msg, file) => {
 
 	msg = removeNounAndArticles(msg);
 	msg = normalize(msg);
-
-	str = "new: " + msg + "\nold: " + oldMsg + "\n\n";*/
-
-	/*fs.appendFile('message.txt', str, function(err) {
-		if(err) {
-			console.log(err);
-		}
-	});*/
-	console.log(str);
+	*/
 }
 
 const removePattern = (msg, pattern) => {
 	return msg.replace(pattern, '');
+}
+
+const replacePattern = (msg, newWord, pattern) => {
+	return msg.replace(pattern, newWord);
 }
 
 const normalize = (msg) => {
@@ -258,4 +258,7 @@ const removeNounAndArticles = (msg) => {
 	}).join(' ');
 }
 
-start(2);
+//0 - LoL
+//1 - DOTA 2
+//2 - CS:GO
+start(0);
