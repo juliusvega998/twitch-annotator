@@ -10,7 +10,7 @@
 	"content_scripts": [
 		{
 			"matches": ["*://www.twitch.tv/videos/*"],
-			"js": ["popup.js"]
+			"js": ["script.js"]
 		}
 	]
 }
