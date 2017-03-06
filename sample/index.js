@@ -100,7 +100,7 @@ const process = (msg, file) => {
 }
 
 const preprocess = (msg, file) => {
-	let usernamePattern = /@[A-Za-z0-9]+/g;
+	let usernamePattern = /@[A-Za-z0-9_]+/g;
 	let commandPattern = /![A-Za-z0-9]+/g;
 	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
 	let nonAlphaNumPattern = /[^a-zA-Z0-9 ]+/g;
