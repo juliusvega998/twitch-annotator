@@ -15,5 +15,6 @@ app.use(body_parser.json());
 app.use(require(__dirname + '/config/router')(express.Router()));
 
 console.log('Server now listening on port: ' + config.PORT);
+console.log('Twitch chat emoticons from twitchemotes.com');
 
 app.listen(config.PORT, config.IP);

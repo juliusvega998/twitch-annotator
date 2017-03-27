@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-	NO_EMOTICONS: 0x1
+	NO_EMOTICONS: 0x103
 }
