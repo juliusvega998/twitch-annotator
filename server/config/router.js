@@ -8,6 +8,7 @@ module.exports = (router) => {
 	router.del = router.delete;
 
 	router.get('/', __.controller.hello);
+	router.post('/preprocess', __.controller.preprocess_all);
 
 	return router;
 }

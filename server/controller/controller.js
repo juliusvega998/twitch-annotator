@@ -154,11 +154,14 @@ exports.hello = (req, res, next) => {
 }
 
 exports.preprocess_all = (req, res, next) => {
-	let msgs = JSON.parse(req);
+	let msgs = JSON.parse(req.body.data);
 	let result = [];
+
 	req.forEach((item, index) => {
 		if(item) {
 			result.push(preprocess(item));
 		}
 	});
+
+	res.send({data: JSON.stringify(result)});
 }

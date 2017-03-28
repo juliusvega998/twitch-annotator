@@ -13,6 +13,7 @@
     "anytv-node-importer": "0.0.7",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "https": "^1.0.0",
     "method-override": "^2.3.8",
     "nlp_compromise": "^6.5.3",
     "superagent": "^3.5.2"
