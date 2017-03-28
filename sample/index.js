@@ -101,7 +101,7 @@ const process = (msg, file) => {
 
 const preprocess = (msg, file) => {
 	let usernamePattern = /@[A-Za-z0-9_]+/g;
-	let commandPattern = /![A-Za-z0-9]+/g;
+	let commandPattern = /![A-Za-z0-9_\-]+/g;
 	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
 	let nonAlphaNumPattern = /[^a-zA-Z0-9 ]+/g;
 
@@ -122,7 +122,6 @@ const preprocess = (msg, file) => {
 		});
 	}
 
-	/*
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, commandPattern);
 	msg = removePattern(msg, urlPattern);
@@ -134,7 +133,7 @@ const preprocess = (msg, file) => {
 
 	msg = removeNounAndArticles(msg);
 	msg = normalize(msg);
-	*/
+	
 }
 
 const removePattern = (msg, pattern) => {
