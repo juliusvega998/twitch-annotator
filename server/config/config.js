@@ -19,7 +19,7 @@ const get_emoticons = () => {
 }
 
 module.exports = {
-	PORT: 8000,
+	PORT: 3000,
 	IP: '127.0.0.1',
 	emoticons: get_emoticons().then(
 		(result) => {

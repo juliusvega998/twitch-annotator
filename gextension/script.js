@@ -41,5 +41,5 @@
     }
 
     console.log('Retrieving chat messages');
-    getMessages(vid_id, 0, 0);
+    //getMessages(vid_id, 0, 0);
 })();
