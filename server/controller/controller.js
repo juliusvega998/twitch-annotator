@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require(__dirname + '/../config/config');
-const npl = require('nlp_compromise');
+const nlp = require('nlp_compromise');
 
 const preprocess = (msg) => {
 	let usernamePattern = /@[A-Za-z0-9_]+/g;
@@ -131,15 +131,13 @@ const removeNounAndArticles = (msg) => {
 				continue;
 			} else if(tag[0][0] === 'Value') {
 				for(let k=0; k < config.emoticons.length; k++) {
-					if(words[j] === config.emoticons[k]){
+					if(words[j] === config.emoticons[k].toLowerCase()){
 						words2.push(words[j]);
 					}
 				}
 			} else {
 				words2.push(words[j]);
 			}
-
-			console.log(tag[0][0] + ' ' + words[j]);
 		}
 	}
 
@@ -157,7 +155,7 @@ exports.preprocess_all = (req, res, next) => {
 	let msgs = JSON.parse(req.body.data);
 	let result = [];
 
-	req.forEach((item, index) => {
+	msgs.forEach((item, index) => {
 		if(item) {
 			result.push(preprocess(item));
 		}

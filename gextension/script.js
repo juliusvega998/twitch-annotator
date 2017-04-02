@@ -1,6 +1,6 @@
 (function() {
 	const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
-	const local_url = 'http://localhost:8000';
+	const local_url = 'https://localhost:3000';
     let vid_id = window.location.pathname.split('/')[2];
 
     let sendMessages = function(msgs) {
@@ -11,7 +11,7 @@
                 data: JSON.stringify(msgs)
             }
         }).done(function(data) {
-            console.log(JSON.stringify(data));
+            console.log(data.data);
         }).fail(function(jqXHR, msg) {
             console.log(JSON.stringify(jqXHR));
         })
@@ -24,7 +24,7 @@
         }).fail(function(jqXHR, msg){
             let msgSplit = JSON.parse(jqXHR.responseText).errors[0].detail.split(' ');
 
-            getMessages(vid_id, msgSplit[4], msgSplit[6]);
+            getMessages(vid_id, parseInt(msgSplit[4]), parseInt(msgSplit[6]));
         }).done(function(data) {
             let msgs = [];
 
@@ -34,12 +34,12 @@
             })
 
             sendMessages(msgs);
-            /*if(start <= end) {
+            if(start <= end) {
                 getMessages(vid_id, start+30, end);
-            }*/
+            }
         });
     }
 
     console.log('Retrieving chat messages');
-    //getMessages(vid_id, 0, 0);
+    getMessages(vid_id, 0, 0);
 })();
