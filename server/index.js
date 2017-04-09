@@ -10,7 +10,7 @@ const app 			= express();
 const options = {
 	key: fs.readFileSync('/etc/apache2/ssl/localhost.key'),
 	cert: fs.readFileSync('/etc/apache2/ssl/localhost.crt'),
-	passphrase: '1726B791FE',
+	passphrase: 'onedoesnotsimply',
 	requestCert: false,
 	rejectUnauthorized: false
 }
