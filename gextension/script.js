@@ -1,6 +1,14 @@
 (function() {
 	const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 	const local_url = 'https://localhost:3000';
+
+    const result = {
+        amusing: 0,
+        neutral: 0,
+        pathetic: 0,
+        infuriating: 0
+    }
+
     let vid_id = window.location.pathname.split('/')[2];
 
     let sendMessages = function(msgs) {
@@ -11,7 +19,19 @@
                 data: JSON.stringify(msgs)
             }
         }).done(function(data) {
-            console.log(data.data);
+            let classes = JSON.parse(data.data);
+            result.amusing += classes.amusing;
+            result.neutral += classes.neutral;
+            result.pathetic += classes.pathetic;
+            result.infuriating += classes.infuriating;
+
+            $('div#annotator').html(
+                "Naive Bayes" + "<br />" +
+                "Amusing: " + result.amusing + "<br />" +
+                "Neutral: " + result.neutral + "<br />" +
+                "Pathetic: " + result.pathetic + "<br />" +
+                "Infuriating: " + result.amusing + "<br />"
+            )
         }).fail(function(jqXHR, msg) {
             console.log(JSON.stringify(jqXHR));
         })
@@ -41,5 +61,18 @@
     }
 
     console.log('Retrieving chat messages');
+
+
+    let insertTag = function() {
+        if($('div#channel > div.mg-b-2').length) {
+            $('div#channel > div.mg-b-2').append('<div id=\'annotator\'></div>');
+        } else {
+            setTimeout(function() {
+                insertTag();
+            }, 500);
+        }
+    }
+
+    insertTag();
     getMessages(vid_id, 0, 0);
 })();

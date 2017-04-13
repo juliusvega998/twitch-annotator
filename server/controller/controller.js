@@ -157,7 +157,6 @@ const removeNounAndArticles = (msg) => {
 
 const naive_classify = (msg) => {
 	let res = [];
-	let index;
 
 	if(nAmusing.classify(msg) === 'pos') {
 		res.push('amusing');
@@ -182,10 +181,7 @@ const naive_classify = (msg) => {
 		return 'neutral';
 	}
 
-	index = (Math.floor(Math.random()*10))%res.length;
-
-	console.log(index + ' ' + res.length);
-	return res[index];
+	return res[(Math.floor(Math.random()*10))%res.length];
 }
 
 
