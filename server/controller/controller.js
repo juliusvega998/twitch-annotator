@@ -4,11 +4,19 @@ const config 	= require(__dirname + '/../config/config');
 const fs 		= require('fs');
 const nlp 		= require('nlp_compromise');
 const natural	= require('natural');
+const svm 		= require('node-svm');
+
+const tfidf			= new natural.TfIdf();
 
 const nAmusing		= new natural.BayesClassifier();
 const nNeutral		= new natural.BayesClassifier();
 const nPathetic		= new natural.BayesClassifier();
 const nInfuriate	= new natural.BayesClassifier();
+
+const sAmusing		= new svm.SVM();
+const sNeutral		= new svm.SVM();
+const sPathetic		= new svm.SVM();
+const sInfuriate	= new svm.SVM();
 
 let data;
 
@@ -184,36 +192,30 @@ const naive_classify = (msg) => {
 	return res[(Math.floor(Math.random()*10))%res.length];
 }
 
-
-/****************************************************/
-exports.init = () => {
-	data = JSON.parse(fs.readFileSync(__dirname + '/results.json', 'utf-8'));
-
+const train_bayes = (data) => {
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 
-		if(msg) {
-			if(data[i].classification === 'amusing') {
-				nAmusing.addDocument(msg, 'pos');
-				nNeutral.addDocument(msg, 'neg');
-				nPathetic.addDocument(msg, 'neg');
-				nInfuriate.addDocument(msg, 'neg');
-			} else if(data[i].classification === 'neutral') {
-				nAmusing.addDocument(msg, 'neg');
-				nNeutral.addDocument(msg, 'pos');
-				nPathetic.addDocument(msg, 'neg');
-				nInfuriate.addDocument(msg, 'neg');
-			} else if(data[i].classification === 'pathetic') {
-				nAmusing.addDocument(msg, 'neg');
-				nNeutral.addDocument(msg, 'neg');
-				nPathetic.addDocument(msg, 'pos');
-				nInfuriate.addDocument(msg, 'neg');
-			} else {
-				nAmusing.addDocument(msg, 'neg');
-				nNeutral.addDocument(msg, 'neg');
-				nPathetic.addDocument(msg, 'neg');
-				nInfuriate.addDocument(msg, 'pos');
-			}
+		if(data[i].classification === 'amusing') {
+			nAmusing.addDocument(msg, 'pos');
+			nNeutral.addDocument(msg, 'neg');
+			nPathetic.addDocument(msg, 'neg');
+			nInfuriate.addDocument(msg, 'neg');
+		} else if(data[i].classification === 'neutral') {
+			nAmusing.addDocument(msg, 'neg');
+			nNeutral.addDocument(msg, 'pos');
+			nPathetic.addDocument(msg, 'neg');
+			nInfuriate.addDocument(msg, 'neg');
+		} else if(data[i].classification === 'pathetic') {
+			nAmusing.addDocument(msg, 'neg');
+			nNeutral.addDocument(msg, 'neg');
+			nPathetic.addDocument(msg, 'pos');
+			nInfuriate.addDocument(msg, 'neg');
+		} else {
+			nAmusing.addDocument(msg, 'neg');
+			nNeutral.addDocument(msg, 'neg');
+			nPathetic.addDocument(msg, 'neg');
+			nInfuriate.addDocument(msg, 'pos');
 		}
 	}
 
@@ -222,26 +224,87 @@ exports.init = () => {
 	nPathetic.train();
 	nInfuriate.train();
 
+	console.log('Naive Bayes done training.');
+}
+
+const svm_classify = (msg) => {
+
+}
+
+const train_SVM = (data) => {
+	let amusing_mat = [];
+	let neutral_mat = [];
+	let pathetic_mat = [];
+	let infuriating_mat = [];
+
+
+	for(let i=0; i<data.length; i++) {
+		let msg = preprocess(data[i].message);
+
+		tfidf.addDocument(msg);
+	}
+
+	for(let i=0; i<data.length; i++) {
+		let msg = preprocess(data[i].message);
+
+		for(let j=0; j<data.length; j++) {
+			let arr = [];
+
+			msg.split(' ').forEach((item, index) => {
+				arr.push(tfidf.tfidf(item, j));
+			});
+
+			if(data[i].classification === 'amusing') {
+				amusing_mat.push([arr, 1]);
+				neutral_mat.push([arr, 0]);
+				pathetic_mat.push([arr, 0]);
+				infuriating_mat.push([arr, 0]);
+			} else if(data[i].classification === 'neutral') {
+				amusing_mat.push([arr, 0]);
+				neutral_mat.push([arr, 1]);
+				pathetic_mat.push([arr, 0]);
+				infuriating_mat.push([arr, 0]);
+			} else if(data[i].classification === 'pathetic') {
+				amusing_mat.push([arr, 0]);
+				neutral_mat.push([arr, 0]);
+				pathetic_mat.push([arr, 1]);
+				infuriating_mat.push([arr, 0]);
+			} else {
+				amusing_mat.push([arr, 0]);
+				neutral_mat.push([arr, 0]);
+				pathetic_mat.push([arr, 0]);
+				infuriating_mat.push([arr, 1]);
+			}
+		}
+	}
+
+	sAmusing.train(amusing_mat);
+	sNeutral.train(neutral_mat);
+	sPathetic.train(pathetic_mat);
+	sInfuriate.train(infuriating_mat);
+
+	console.log('SVM done training.');
+}
+
+
+/****************************************************/
+exports.init = () => {
+	data = JSON.parse(fs.readFileSync(__dirname + '/results.json', 'utf-8')).filter((n) => {
+		return preprocess(n.message).trim() !== '';
+	});
+
 	console.log(data.length + ' training data loaded.');
+
+	train_bayes(data);
+	train_SVM(data);
+
 }
 
 
 exports.hello = (req, res, next) => {
-	return res.send({message: "Hello World!"});
+	return res.send({message: 'Hello World!'});
 }
 
-/*exports.preprocess_all = (req, res, next) => {
-	let msgs = JSON.parse(req.body.data);
-	let result = [];
-
-	msgs.forEach((item, index) => {
-		if(item) {
-			result.push(preprocess(item));
-		}
-	});
-
-	res.send({data: JSON.stringify(result)});
-}*/
 
 exports.naive_bayes = (req, res, next) => {
 	let msgs = JSON.parse(req.body.data);
@@ -257,6 +320,28 @@ exports.naive_bayes = (req, res, next) => {
 			let str = preprocess(item);
 			if(str) {
 				let cat = naive_classify(str);
+				result[cat]++;
+			}
+		}
+	});
+
+	res.send({data: JSON.stringify(result)});
+}
+
+exports.support_vector = (req, res, next) => {
+	let msgs = JSON.parse(req.body.data);
+	let result = {
+		amusing: 0,
+		neutral: 0,
+		pathetic: 0,
+		infuriating: 0
+	};
+
+	msgs.forEach((item, index) => {
+		if(item) {
+			let str = preprocess(item);
+			if(str) {
+				let cat = svm_classify(str);
 				result[cat]++;
 			}
 		}
