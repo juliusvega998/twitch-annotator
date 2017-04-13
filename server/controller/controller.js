@@ -7,11 +7,7 @@ const natural	= require('natural');
 const svm 		= require('node-svm');
 
 const tfidf			= new natural.TfIdf();
-
-const nAmusing		= new natural.BayesClassifier();
-const nNeutral		= new natural.BayesClassifier();
-const nPathetic		= new natural.BayesClassifier();
-const nInfuriate	= new natural.BayesClassifier();
+const bayes 		= new natural.BayesClassifier();
 
 const sAmusing		= new svm.SVM();
 const sNeutral		= new svm.SVM();
@@ -166,69 +162,51 @@ const removeNounAndArticles = (msg) => {
 const naive_classify = (msg) => {
 	let res = [];
 
-	if(nAmusing.classify(msg) === 'pos') {
-		res.push('amusing');
-	}
-
-	if(nPathetic.classify(msg) === 'pos') {
-		res.push('pathetic');
-	}
-
-	if(nInfuriate.classify(msg) === 'pos') {
-		res.push('infuriating');
-	}
-
-	if(res.length) {
-		if(nNeutral.classify(msg) === 'pos') {
-			res.push('neutral');
-		}
-	} else {
-		nNeutral.addDocument(msg, 'pos');
-		nNeutral.train();
-
-		return 'neutral';
-	}
-
-	return res[(Math.floor(Math.random()*10))%res.length];
+	return bayes.classify(msg);
 }
 
 const train_bayes = (data) => {
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 
-		if(data[i].classification === 'amusing') {
-			nAmusing.addDocument(msg, 'pos');
-			nNeutral.addDocument(msg, 'neg');
-			nPathetic.addDocument(msg, 'neg');
-			nInfuriate.addDocument(msg, 'neg');
-		} else if(data[i].classification === 'neutral') {
-			nAmusing.addDocument(msg, 'neg');
-			nNeutral.addDocument(msg, 'pos');
-			nPathetic.addDocument(msg, 'neg');
-			nInfuriate.addDocument(msg, 'neg');
-		} else if(data[i].classification === 'pathetic') {
-			nAmusing.addDocument(msg, 'neg');
-			nNeutral.addDocument(msg, 'neg');
-			nPathetic.addDocument(msg, 'pos');
-			nInfuriate.addDocument(msg, 'neg');
-		} else {
-			nAmusing.addDocument(msg, 'neg');
-			nNeutral.addDocument(msg, 'neg');
-			nPathetic.addDocument(msg, 'neg');
-			nInfuriate.addDocument(msg, 'pos');
-		}
+		bayes.addDocument(msg, data[i].classification);
 	}
 
-	nAmusing.train();
-	nNeutral.train();
-	nPathetic.train();
-	nInfuriate.train();
+	bayes.train();
 
 	console.log('Naive Bayes done training.');
 }
 
 const svm_classify = (msg) => {
+	let arr = [];
+	let prob = [];
+	let res;
+	let min = 1, minIndex = -1;
 
+	msg.split(' ').forEach((item, index) => {
+		tfidf.tfidfs(item).forEach((item2, index2) => {
+			arr.push(item2);
+		});
+	});
+
+	prob.push(sAmusing.predictProbabilitiesSync(arr));
+	prob.push(sPathetic.predictProbabilitiesSync(arr));
+	prob.push(sInfuriate.predictProbabilitiesSync(arr));
+	prob.push(sNeutral.predictProbabilitiesSync(arr));
+
+	for(let i=0; i<prob.length; i++) {
+		if(min < prob[i]) {
+			min = prob[i];
+			minIndex = i;
+		}
+	}
+
+	switch(minIndex) {
+		case 0: return 'amusing';
+		case 2: return 'pathetic';
+		case 3: return 'infuriating';
+		default: return 'neutral';
+	}
 }
 
 const train_SVM = (data) => {
@@ -236,7 +214,6 @@ const train_SVM = (data) => {
 	let neutral_mat = [];
 	let pathetic_mat = [];
 	let infuriating_mat = [];
-
 
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
@@ -247,12 +224,8 @@ const train_SVM = (data) => {
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 
-		for(let j=0; j<data.length; j++) {
-			let arr = [];
-
-			msg.split(' ').forEach((item, index) => {
-				arr.push(tfidf.tfidf(item, j));
-			});
+		msg.split(' ').forEach((item, index) => {
+			let arr = tfidf.tfidfs(item);
 
 			if(data[i].classification === 'amusing') {
 				amusing_mat.push([arr, 1]);
@@ -275,7 +248,7 @@ const train_SVM = (data) => {
 				pathetic_mat.push([arr, 0]);
 				infuriating_mat.push([arr, 1]);
 			}
-		}
+		});
 	}
 
 	sAmusing.train(amusing_mat);

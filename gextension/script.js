@@ -11,7 +11,7 @@
 
     let vid_id = window.location.pathname.split('/')[2];
 
-    let sendMessages = function(msgs) {
+    let sendMessagesBayes = function(msgs) {
         $.ajax({
             method: 'POST',
             url: local_url + '/naive_bayes',
@@ -25,8 +25,35 @@
             result.pathetic += classes.pathetic;
             result.infuriating += classes.infuriating;
 
-            $('div#annotator').html(
+            $('div#annotator-bayes').html(
                 "Naive Bayes" + "<br />" +
+                "Amusing: " + result.amusing + "<br />" +
+                "Neutral: " + result.neutral + "<br />" +
+                "Pathetic: " + result.pathetic + "<br />" +
+                "Infuriating: " + result.amusing + "<br />"
+            )
+        }).fail(function(jqXHR, msg) {
+            console.log(JSON.stringify(jqXHR));
+        })
+    }
+
+    let sendMessagesSVM = function(msgs) {
+        $.ajax({
+            method: 'POST',
+            url: local_url + '/svm',
+            data: {
+                data: JSON.stringify(msgs)
+            }
+        }).done(function(data) {
+            let classes = JSON.parse(data.data);
+            
+            result.amusing += classes.amusing;
+            result.neutral += classes.neutral;
+            result.pathetic += classes.pathetic;
+            result.infuriating += classes.infuriating;
+
+            $('div#annotator-svm').html(
+                "SVM" + "<br />" +
                 "Amusing: " + result.amusing + "<br />" +
                 "Neutral: " + result.neutral + "<br />" +
                 "Pathetic: " + result.pathetic + "<br />" +
@@ -53,7 +80,8 @@
                     msgs.push(e.attributes.message);
             })
 
-            sendMessages(msgs);
+            sendMessagesBayes(msgs);
+            sendMessagesSVM(msgs);
             if(start <= end) {
                 getMessages(vid_id, start+30, end);
             }
@@ -65,7 +93,8 @@
 
     let insertTag = function() {
         if($('div#channel > div.mg-b-2').length) {
-            $('div#channel > div.mg-b-2').append('<div id=\'annotator\'></div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'annotator-bayes\'></div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'>Hello World!</div>');
         } else {
             setTimeout(function() {
                 insertTag();
