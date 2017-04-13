@@ -45,6 +45,12 @@ module.exports = {
 			short: 'bff',
 			long: 'best friends forever',
 		},{
+			short: 'cn',
+			long: 'china'
+		},{
+			short: 'eu',
+			long: 'europe'
+		},{
 			short: 'ftw',
 			long: 'for the win',
 		},{
@@ -71,6 +77,9 @@ module.exports = {
 		},{
 			short: 'lol',
 			long: 'laugh out loud',
+		},{
+			short: 'na',
+			long: 'north america'
 		},{
 			short: 'np',
 			long: 'no problem',
@@ -99,6 +108,9 @@ module.exports = {
 			short: 'smth',
 			long: 'something',
 		},{
+			short: 'stfu',
+			long: 'shut the fuck up'
+		},{
 			short: 'thx',
 			long: 'thanks',
 		},{
@@ -107,6 +119,9 @@ module.exports = {
 		},{
 			short: 'tmw',
 			long: 'that moment when',
+		},{
+			short: 'usa',
+			long: 'united states of america'
 		},{
 			short: 'vs',
 			long: 'versus',
