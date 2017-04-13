@@ -16,6 +16,7 @@
     "http": "0.0.0",
     "https": "^1.0.0",
     "method-override": "^2.3.8",
+    "natural": "^0.5.0",
     "nlp_compromise": "^6.5.3",
     "superagent": "^3.5.2"
   }

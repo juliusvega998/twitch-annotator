@@ -6,7 +6,7 @@
     let sendMessages = function(msgs) {
         $.ajax({
             method: 'POST',
-            url: local_url + '/preprocess',
+            url: local_url + '/naive_bayes',
             data: {
                 data: JSON.stringify(msgs)
             }

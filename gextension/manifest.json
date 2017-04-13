@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Twitch Annotator",
 	"description": "This chrome extension will annotate parts of a broadcast that will determine which parts are funny, sad, or rage.",
-	"version": "0.11.14",
+	"version": "0.12.0",
 	"permissions": [
 		"activeTab",
 		"*://www.twitch.tv/videos/*",
