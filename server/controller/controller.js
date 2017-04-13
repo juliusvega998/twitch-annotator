@@ -285,7 +285,8 @@ exports.naive_bayes = (req, res, next) => {
 		amusing: 0,
 		neutral: 0,
 		pathetic: 0,
-		infuriating: 0
+		infuriating: 0,
+		total: msgs.length
 	};
 
 	msgs.forEach((item, index) => {
@@ -307,7 +308,8 @@ exports.support_vector = (req, res, next) => {
 		amusing: 0,
 		neutral: 0,
 		pathetic: 0,
-		infuriating: 0
+		infuriating: 0,
+		total: msgs.length
 	};
 
 	msgs.forEach((item, index) => {

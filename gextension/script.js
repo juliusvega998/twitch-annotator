@@ -2,11 +2,20 @@
 	const url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 	const local_url = 'https://localhost:3000';
 
-    const result = {
+    const resultBayes= {
         amusing: 0,
         neutral: 0,
         pathetic: 0,
-        infuriating: 0
+        infuriating: 0,
+        total: 0
+    }
+
+    const resultSVM= {
+        amusing: 0,
+        neutral: 0,
+        pathetic: 0,
+        infuriating: 0,
+        total: 0
     }
 
     let vid_id = window.location.pathname.split('/')[2];
@@ -20,17 +29,19 @@
             }
         }).done(function(data) {
             let classes = JSON.parse(data.data);
-            result.amusing += classes.amusing;
-            result.neutral += classes.neutral;
-            result.pathetic += classes.pathetic;
-            result.infuriating += classes.infuriating;
+            resultBayes.amusing += classes.amusing;
+            resultBayes.neutral += classes.neutral;
+            resultBayes.pathetic += classes.pathetic;
+            resultBayes.infuriating += classes.infuriating;
+            resultBayes.total += classes.total;
 
             $('div#annotator-bayes').html(
                 "Naive Bayes" + "<br />" +
-                "Amusing: " + result.amusing + "<br />" +
-                "Neutral: " + result.neutral + "<br />" +
-                "Pathetic: " + result.pathetic + "<br />" +
-                "Infuriating: " + result.amusing + "<br />"
+                "Amusing: " + resultBayes.amusing + "<br />" +
+                "Neutral: " + resultBayes.neutral + "<br />" +
+                "Pathetic: " + resultBayes.pathetic + "<br />" +
+                "Infuriating: " + resultBayes.infuriating + "<br />" +
+                "Total: " + resultBayes.total + "<br />"
             )
         }).fail(function(jqXHR, msg) {
             console.log(JSON.stringify(jqXHR));
@@ -47,17 +58,19 @@
         }).done(function(data) {
             let classes = JSON.parse(data.data);
             
-            result.amusing += classes.amusing;
-            result.neutral += classes.neutral;
-            result.pathetic += classes.pathetic;
-            result.infuriating += classes.infuriating;
+            resultSVM.amusing += classes.amusing;
+            resultSVM.neutral += classes.neutral;
+            resultSVM.pathetic += classes.pathetic;
+            resultSVM.infuriating += classes.infuriating;
+            resultSVM.total += classes.total;
 
             $('div#annotator-svm').html(
                 "SVM" + "<br />" +
-                "Amusing: " + result.amusing + "<br />" +
-                "Neutral: " + result.neutral + "<br />" +
-                "Pathetic: " + result.pathetic + "<br />" +
-                "Infuriating: " + result.amusing + "<br />"
+                "Amusing: " + resultSVM.amusing + "<br />" +
+                "Neutral: " + resultSVM.neutral + "<br />" +
+                "Pathetic: " + resultSVM.pathetic + "<br />" +
+                "Infuriating: " + resultSVM.infuriating + "<br />" +
+                "Total: " + resultSVM.total + "<br />"
             )
         }).fail(function(jqXHR, msg) {
             console.log(JSON.stringify(jqXHR));
