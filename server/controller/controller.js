@@ -178,12 +178,10 @@ const train_bayes = (data) => {
 }
 
 const svm_classify = (msg) => {
-	let arr = [];
+	let arr = tfidf.tfidfs(msg);
 	let prob = [];
-	let res;
 	let max = 0, maxIndex = -1;
-
-	tfidf.tfidfs(msg);
+	let res;
 
 	prob.push(sAmusing.predictProbabilitiesSync(arr)['1']);
 	prob.push(sPathetic.predictProbabilitiesSync(arr)['1']);
