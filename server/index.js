@@ -19,11 +19,10 @@ app.set('case sensitive routing', true);
 app.set('x-powered-by', false);
 
 app.use(require('method-override')());
-app.use(body_parser.urlencoded({extended: false}));
+app.use(body_parser.urlencoded({limit: '5mb', extended: false}));
 app.use(body_parser.json());
 app.use(require(__dirname + '/config/router')(express.Router()));
 
-//app.listen(config.PORT, config.IP);
 https.createServer(options, app).listen(config.PORT, () => {
 	console.log('Server now listening on port: ' + config.PORT);
 	console.log('Twitch chat emoticons from twitchemotes.com');

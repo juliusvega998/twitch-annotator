@@ -188,7 +188,7 @@ const svm_classify = (msg) => {
 	prob.push(sInfuriate.predictProbabilitiesSync(arr)['1']);
 	prob.push(sNeutral.predictProbabilitiesSync(arr)['1']);
 
-	console.log(prob);
+	//console.log(prob);
 
 	for(let i=0; i<prob.length; i++) {
 		if(max < prob[i]) {
