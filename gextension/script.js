@@ -107,7 +107,7 @@
     let insertTag = function() {
         if($('div#channel > div.mg-b-2').length) {
             $('div#channel > div.mg-b-2').append('<div id=\'annotator-bayes\'></div>');
-            $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'>Hello World!</div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'></div>');
         } else {
             setTimeout(function() {
                 insertTag();

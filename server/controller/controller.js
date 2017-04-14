@@ -181,30 +181,28 @@ const svm_classify = (msg) => {
 	let arr = [];
 	let prob = [];
 	let res;
-	let min = 1, minIndex = -1;
+	let max = 0, maxIndex = -1;
 
-	msg.split(' ').forEach((item, index) => {
-		tfidf.tfidfs(item).forEach((item2, index2) => {
-			arr.push(item2);
-		});
-	});
+	tfidf.tfidfs(msg);
 
-	prob.push(sAmusing.predictProbabilitiesSync(arr));
-	prob.push(sPathetic.predictProbabilitiesSync(arr));
-	prob.push(sInfuriate.predictProbabilitiesSync(arr));
-	prob.push(sNeutral.predictProbabilitiesSync(arr));
+	prob.push(sAmusing.predictProbabilitiesSync(arr)['1']);
+	prob.push(sPathetic.predictProbabilitiesSync(arr)['1']);
+	prob.push(sInfuriate.predictProbabilitiesSync(arr)['1']);
+	prob.push(sNeutral.predictProbabilitiesSync(arr)['1']);
+
+	console.log(prob);
 
 	for(let i=0; i<prob.length; i++) {
-		if(min < prob[i]) {
-			min = prob[i];
-			minIndex = i;
+		if(max < prob[i]) {
+			max = prob[i];
+			maxIndex = i;
 		}
 	}
 
-	switch(minIndex) {
+	switch(maxIndex) {
 		case 0: return 'amusing';
-		case 2: return 'pathetic';
-		case 3: return 'infuriating';
+		case 1: return 'pathetic';
+		case 2: return 'infuriating';
 		default: return 'neutral';
 	}
 }
@@ -217,38 +215,34 @@ const train_SVM = (data) => {
 
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
-
 		tfidf.addDocument(msg);
 	}
 
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
+		let arr = tfidf.tfidfs(msg);
 
-		msg.split(' ').forEach((item, index) => {
-			let arr = tfidf.tfidfs(item);
-
-			if(data[i].classification === 'amusing') {
-				amusing_mat.push([arr, 1]);
-				neutral_mat.push([arr, 0]);
-				pathetic_mat.push([arr, 0]);
-				infuriating_mat.push([arr, 0]);
-			} else if(data[i].classification === 'neutral') {
-				amusing_mat.push([arr, 0]);
-				neutral_mat.push([arr, 1]);
-				pathetic_mat.push([arr, 0]);
-				infuriating_mat.push([arr, 0]);
-			} else if(data[i].classification === 'pathetic') {
-				amusing_mat.push([arr, 0]);
-				neutral_mat.push([arr, 0]);
-				pathetic_mat.push([arr, 1]);
-				infuriating_mat.push([arr, 0]);
-			} else {
-				amusing_mat.push([arr, 0]);
-				neutral_mat.push([arr, 0]);
-				pathetic_mat.push([arr, 0]);
-				infuriating_mat.push([arr, 1]);
-			}
-		});
+		if(data[i].classification === 'amusing') {
+			amusing_mat.push([arr, 1]);
+			neutral_mat.push([arr, 0]);
+			pathetic_mat.push([arr, 0]);
+			infuriating_mat.push([arr, 0]);
+		} else if(data[i].classification === 'neutral') {
+			amusing_mat.push([arr, 0]);
+			neutral_mat.push([arr, 1]);
+			pathetic_mat.push([arr, 0]);
+			infuriating_mat.push([arr, 0]);
+		} else if(data[i].classification === 'pathetic') {
+			amusing_mat.push([arr, 0]);
+			neutral_mat.push([arr, 0]);
+			pathetic_mat.push([arr, 1]);
+			infuriating_mat.push([arr, 0]);
+		} else {
+			amusing_mat.push([arr, 0]);
+			neutral_mat.push([arr, 0]);
+			pathetic_mat.push([arr, 0]);
+			infuriating_mat.push([arr, 1]);
+		}
 	}
 
 	sAmusing.train(amusing_mat);
