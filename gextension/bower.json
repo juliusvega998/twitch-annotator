@@ -1,0 +1,20 @@
+{
+  "name": "twitch-annotator",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "juliusvega998"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/juliusvega998/twitch-annotator",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "svg.js": "^2.5.2"
+  }
+}
