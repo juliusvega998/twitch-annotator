@@ -9,10 +9,27 @@ const svm 		= require('node-svm');
 const tfidf			= new natural.TfIdf();
 const bayes 		= new natural.BayesClassifier();
 
-const sAmusing		= new svm.SVM();
-const sNeutral		= new svm.SVM();
-const sPathetic		= new svm.SVM();
-const sInfuriate	= new svm.SVM();
+const svm_options = {
+	svmType: 'C_SVC',
+	//c: [0.03125, 0.125, 0.5, 2, 8],
+	c: 0.00000000000000000000000000000000000001,
+
+	kernelType: 'LINEAR',
+
+	kFold: 4,               
+	normalize: true,        
+	reduce: true,           
+	retainedVariance: 0.99, 
+	eps: 1e-3,              
+	cacheSize: 200,               
+	shrinking : true,     
+	probability : false 
+}
+
+const sAmusing		= new svm.SVM(svm_options);
+const sNeutral		= new svm.SVM(svm_options);
+const sPathetic		= new svm.SVM(svm_options);
+const sInfuriate	= new svm.SVM(svm_options);
 
 let data;
 
@@ -187,8 +204,6 @@ const svm_classify = (msg) => {
 	prob.push(sPathetic.predictProbabilitiesSync(arr)['1']);
 	prob.push(sInfuriate.predictProbabilitiesSync(arr)['1']);
 	prob.push(sNeutral.predictProbabilitiesSync(arr)['1']);
-
-	//console.log(prob);
 
 	for(let i=0; i<prob.length; i++) {
 		if(max < prob[i]) {
