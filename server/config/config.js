@@ -139,6 +139,9 @@ module.exports = {
 		'fuckin',
 		'shit',
 		'goddamn',
-		'damn'
+		'damn',
+		'ass',
+		'asshole',
+		'cunt'
 	]
 }
