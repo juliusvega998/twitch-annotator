@@ -33,30 +33,6 @@ const sInfuriate	= new svm.SVM(svm_options);
 
 let data;
 
-const preprocess = (msg) => {
-	let usernamePattern = /@[A-Za-z0-9_]+/g;
-	let commandPattern = /![A-Za-z0-9_\-]+/g;
-	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
-	let nonAlphaNumPattern = /[^a-zA-Z0-9# ]+/g;
-
-	let oldMsg = msg;
-	let str = "";
-
-	msg = removePattern(msg, commandPattern);
-	msg = removePattern(msg, usernamePattern);
-	msg = removePattern(msg, urlPattern);
-	msg = toLower(msg);
-
-	msg = changeAbbrev(msg);
-	msg = toExtend(msg);
-	msg = removePattern(msg, nonAlphaNumPattern);
-
-	msg = removeNounAndArticles(msg);
-	msg = normalize(msg);
-
-	return msg;
-}
-
 const removePattern = (msg, pattern) => {
 	return msg.replace(pattern, '');
 }
@@ -268,6 +244,31 @@ const train_SVM = (data) => {
 
 
 /****************************************************/
+
+exports.preprocess = (msg) => {
+	let usernamePattern = /@[A-Za-z0-9_]+/g;
+	let commandPattern = /![A-Za-z0-9_\-]+/g;
+	let urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g;
+	let nonAlphaNumPattern = /[^a-zA-Z0-9# ]+/g;
+
+	let oldMsg = msg;
+	let str = "";
+
+	msg = removePattern(msg, commandPattern);
+	msg = removePattern(msg, usernamePattern);
+	msg = removePattern(msg, urlPattern);
+	msg = toLower(msg);
+
+	msg = changeAbbrev(msg);
+	msg = toExtend(msg);
+	msg = removePattern(msg, nonAlphaNumPattern);
+
+	msg = removeNounAndArticles(msg);
+	msg = normalize(msg);
+
+	return msg;
+}
+
 exports.init = () => {
 	data = JSON.parse(fs.readFileSync(__dirname + '/results.json', 'utf-8')).filter((n) => {
 		return preprocess(n.message).trim() !== '';
