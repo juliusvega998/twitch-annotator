@@ -2,10 +2,11 @@
 
 const fs 			= require('fs');
 const nlp			= require('nlp_compromise');
+const natural		= require('natural');
 const controller	= require(__dirname + '/../controller');
 const file_name 	= __dirname + '/data/X.json';
 
-const bayes 		= new natural.BayesClassifier();
+let bayes;
 
 const mat = [
 	[0, 0, 0, 0],
@@ -28,28 +29,35 @@ const naive_classify = (msg) => {
 
 const train_bayes = (data) => {
 	for(let i=0; i<data.length; i++) {
-		let msg = controller.preprocess(data[i].message);
+		let msg = controller.process(data[i].message);
 
 		bayes.addDocument(msg, data[i].classification);
 	}
 
 	bayes.train();
-
-	console.log('Naive Bayes done training.');
 }
 
 const start = () => {
-	/*for(let i=0; i<10; i++) {
-		fs.readFile(file_name.replace('X', i + ''), 'utf-8', (err, data) => {
-			if(err) throw err;
-			else {
-				let msgs = JSON.parse(data);
-				train_bayes
-			}
-		});
-	}*/
+	for(let i=0; i<10; i++) {
+		let msgs = JSON.parse(fs.readFileSync(file_name.replace('X', i + ''), 'utf-8'));
+		bayes = new natural.BayesClassifier();
 
-	console.log("Hello World!");
+		train_bayes(msgs.test);
+
+		msgs.train.forEach((item, index) => {
+			let classif = naive_classify(controller.process(item.message));
+			mat[cat[item.classification]][cat[classif]]++;
+		});
+	}
+
+	for(let i=0; i<4; i++) {
+		for(let j=0; j<4; j++) {
+			fs.appendFileSync('output.txt', mat[i][j] + '\t');
+		}
+		fs.appendFileSync('output.txt', '\n');
+	}
+
+	console.log('Done!');
 }
 
 start();
