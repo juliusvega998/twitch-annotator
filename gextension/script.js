@@ -1,14 +1,13 @@
 (function() {
 	const chat_url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 	const local_url = 'https://localhost:3000';
-    const video_url = 'https://api.twitch.tv/kraken/videos/VIDID'
-    const client_id = '58ivn8popntkrux213rcvnanc3mq3n';
 
     const resultBayes= {
         amusing: 0,
         neutral: 0,
         pathetic: 0,
         infuriating: 0,
+        unclassified: 0,
         total: 0
     }
 
@@ -17,6 +16,7 @@
         neutral: 0,
         pathetic: 0,
         infuriating: 0,
+        unclassified: 0,
         total: 0
     }
 
@@ -44,6 +44,7 @@
             resultBayes.neutral += classes.neutral;
             resultBayes.pathetic += classes.pathetic;
             resultBayes.infuriating += classes.infuriating;
+            resultBayes.unclassified += classes.unclassified;
             resultBayes.total += classes.total;
 
             $('div#annotator-bayes').html(
@@ -52,6 +53,7 @@
                 "Neutral: " + resultBayes.neutral + "<br />" +
                 "Pathetic: " + resultBayes.pathetic + "<br />" +
                 "Infuriating: " + resultBayes.infuriating + "<br />" +
+                "Unclassified: " + resultBayes.unclassified + "<br />" +
                 "Total: " + resultBayes.total + "<br />"
             )
 
@@ -77,6 +79,7 @@
             resultSVM.neutral += classes.neutral;
             resultSVM.pathetic += classes.pathetic;
             resultSVM.infuriating += classes.infuriating;
+            resultSVM.unclassified += classes.unclassified;
             resultSVM.total += classes.total;
 
             $('div#annotator-svm').html(
@@ -85,6 +88,7 @@
                 "Neutral: " + resultSVM.neutral + "<br />" +
                 "Pathetic: " + resultSVM.pathetic + "<br />" +
                 "Infuriating: " + resultSVM.infuriating + "<br />" +
+                "Unclassified: " + resultSVM.unclassified + "<br />" +
                 "Total: " + resultSVM.total + "<br />"
             )
 
@@ -99,7 +103,7 @@
         let max = 0, maxIndex;
 
         Object.keys(classes).forEach(function(key, index) {
-            if(key === 'total') {
+            if(key === 'total' || key === 'unclassified') {
                 return;
             } else {
                 if(max < classes[key]) {
@@ -113,7 +117,7 @@
             case 'amusing':     return amuse_col;
             case 'neutral':     return neutral_col;
             case 'pathetic':    return pathetic_col;
-            case 'infuriating': return infuriating_col;
+            default: return infuriating_col;
         }
     }
 
@@ -125,6 +129,7 @@
             let msgSplit = JSON.parse(jqXHR.responseText).errors[0].detail.split(' ');
 
             getMessages(vid_id, parseInt(msgSplit[4]), parseInt(msgSplit[6]), 0);
+            getRectWidth(parseInt(msgSplit[4]), parseInt(msgSplit[6]));
         }).done(function(data) {
             let msgs = [];
 
@@ -155,24 +160,13 @@
         });
     }
 
-    let getRectWidth = function() {
-        $.ajax({
-            type: 'GET',
-            url: video_url.replace('VIDID', vid_id),
-            headers: {
-                'Client-ID': client_id
-            }
-        }).fail(function(jqXHR, msg){
-            console.log(msg);
-        }).done(function(data) {
-            let length = data.length;
-            let n = length/30 + ((length%30 === 0)? 0: 1);
+    let getRectWidth = function(start, end) {
+        let length = end - start;
+        let n = length/30 + ((length%30 === 0)? 0: 1);
 
-            rect_width = 100/n;
+        rect_width = 100/n;
 
-            console.log('Retrieving chat messages');
-            getMessages(vid_id, 0, 0, 0);
-        });
+        console.log('Retrieving chat messages');
     }
 
     let insertTag = function() {
@@ -182,7 +176,7 @@
             $('div#channel > div.mg-b-2').append('<div id=\'drawer-svm\'></div>');
             $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'></div>');
 
-            getRectWidth();
+            getMessages(vid_id, 0, 0, 0);
 
             svg_bayes = SVG('drawer-bayes').size('100%', 50);
             svg_svm = SVG('drawer-svm').size('100%', 50);

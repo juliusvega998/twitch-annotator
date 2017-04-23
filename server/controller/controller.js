@@ -11,10 +11,12 @@ const bayes 		= new natural.BayesClassifier();
 
 const svm_options = {
 	svmType: 'C_SVC',
-	//c: [0.03125, 0.125, 0.5, 2, 8],
-	c: 0.00000000000000000000000000000000000001,
+	c: [0.03125, 0.125, 0.5, 2, 8],
 
-	kernelType: 'LINEAR',
+	kernelType: 'POLY',
+	degree: 2,
+	gamma: [0.001,0.01,0.5],
+	r: 	[0.125,0.5,0,1],
 
 	kFold: 4,               
 	normalize: true,        
@@ -278,7 +280,6 @@ exports.init = () => {
 
 	train_bayes(data);
 	train_SVM(data);
-
 }
 
 
@@ -294,6 +295,7 @@ exports.naive_bayes = (req, res, next) => {
 		neutral: 0,
 		pathetic: 0,
 		infuriating: 0,
+		unclassified: 0,
 		total: msgs.length
 	};
 
@@ -303,6 +305,8 @@ exports.naive_bayes = (req, res, next) => {
 			if(str) {
 				let cat = naive_classify(str);
 				result[cat]++;
+			} else {
+				result.unclassified++;
 			}
 		}
 	});
@@ -317,6 +321,7 @@ exports.support_vector = (req, res, next) => {
 		neutral: 0,
 		pathetic: 0,
 		infuriating: 0,
+		unclassified: 0,
 		total: msgs.length
 	};
 
@@ -326,6 +331,8 @@ exports.support_vector = (req, res, next) => {
 			if(str) {
 				let cat = svm_classify(str);
 				result[cat]++;
+			} else {
+				result.unclassified++;
 			}
 		}
 	});
