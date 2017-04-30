@@ -15,10 +15,10 @@
     "express": "^4.15.2",
     "http": "0.0.0",
     "https": "^1.0.0",
+    "machine_learning": "^0.1.1",
     "method-override": "^2.3.8",
     "natural": "^0.5.0",
     "nlp_compromise": "^6.5.3",
-    "node-svm": "^2.1.8",
     "superagent": "^3.5.2"
   }
 }

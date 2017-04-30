@@ -21,13 +21,7 @@ const get_emoticons = () => {
 module.exports = {
 	PORT: 3000,
 	IP: '127.0.0.1',
-	emoticons: get_emoticons().then(
-		(result) => {
-			return result;
-		}, (error) => {
-			process.exit(error.NO_EMOTICONS);
-		}
-	),
+	emoticons: get_emoticons(),
 	abbreviated: [
 		{
 			short: 'af',

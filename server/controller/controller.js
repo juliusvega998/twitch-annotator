@@ -4,34 +4,27 @@ const config 	= require(__dirname + '/../config/config');
 const fs 		= require('fs');
 const nlp 		= require('nlp_compromise');
 const natural	= require('natural');
-const svm 		= require('node-svm');
+const ml 		= require('machine_learning');
 
 const tfidf			= new natural.TfIdf();
 const bayes 		= new natural.BayesClassifier();
 
 const svm_options = {
-	svmType: 'C_SVC',
-	c: [0.03125, 0.125, 0.5, 2, 8],
+	C: 1.0,
+	tol: 1e-5,
+	max_passes: 20,
 
-	kernelType: 'POLY',
-	degree: 2,
-	gamma: [0.001,0.01,0.5],
-	r: 	[0.125,0.5,0,1],
-
-	kFold: 4,               
-	normalize: true,        
-	reduce: true,           
-	retainedVariance: 0.99, 
-	eps: 1e-3,              
-	cacheSize: 200,               
-	shrinking : true,     
-	probability : false 
+	kernel: { type: 'polynomial', c: 1, d: 5},
 }
 
-const sAmusing		= new svm.SVM(svm_options);
-const sNeutral		= new svm.SVM(svm_options);
-const sPathetic		= new svm.SVM(svm_options);
-const sInfuriate	= new svm.SVM(svm_options);
+let sAmusing;
+let sNeutral;
+let sPathetic;
+let sInfuriate;
+
+let emoticonsDone	= false;
+let emoticonsLoading = false;
+let emoticons;
 
 const preprocess = (msg) => {
 	let usernamePattern = /@[A-Za-z0-9_]+/g;
@@ -40,12 +33,12 @@ const preprocess = (msg) => {
 	let nonAlphaNumPattern = /[^a-zA-Z0-9# ]+/g;
 
 	let oldMsg = msg;
-	let str = "";
 
 	msg = removePattern(msg, commandPattern);
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
 	msg = toLower(msg);
+
 
 	msg = changeAbbrev(msg);
 	msg = toExtend(msg);
@@ -71,8 +64,8 @@ const normalize = (msg) => {
 
 	for(let i=0; i < words.length; i++) {
 		let isEmoticon = false;
-		for(let j=0; j < config.emoticons.length; j++) {
-			if(words[i] === config.emoticons[j]){
+		for(let j=0; j < emoticons.length; j++) {
+			if(words[i] === emoticons[j].toLowerCase()){
 				words2.push(words[i]);
 				isEmoticon = true;
 			}
@@ -126,15 +119,17 @@ const removeNounAndArticles = (msg) => {
 			if(tag[0][0] === 'Determiner') {
 				continue;
 			} else if(tag[0][0] === "Noun") {
-				for(let k=0; k < config.emoticons.length; k++) {
-					if(words[j] === config.emoticons[k]){
+				for(let k=0; k < emoticons.length; k++) {
+					if(words[j] === emoticons[k].toLowerCase()){
 						words2.push(words[j]);
+						break;
 					}
 				}
 
 				for(let k=0; k < config.swears.length; k++) {
-					if(words[j] === config.swears[k]){
+					if(words[j] === config.swears[k].toLowerCase()){
 						words2.push(words[j]);
+						break;
 					}
 				}
 			} else if(tag[0][0] === 'Person') {
@@ -160,9 +155,10 @@ const removeNounAndArticles = (msg) => {
 			} else if(tag[0][0] === 'Organization') {
 				continue;
 			} else if(tag[0][0] === 'Value') {
-				for(let k=0; k < config.emoticons.length; k++) {
-					if(words[j] === config.emoticons[k].toLowerCase()){
+				for(let k=0; k < emoticons.length; k++) {
+					if(words[j] === emoticons[k].toLowerCase()){
 						words2.push(words[j]);
+						break;
 					}
 				}
 			} else {
@@ -200,17 +196,19 @@ const svm_classify = (msg) => {
 	let max = 0, maxIndex = -1;
 	let res;
 
-	prob.push(sAmusing.predictProbabilitiesSync(arr)['1']);
-	prob.push(sPathetic.predictProbabilitiesSync(arr)['1']);
-	prob.push(sInfuriate.predictProbabilitiesSync(arr)['1']);
-	prob.push(sNeutral.predictProbabilitiesSync(arr)['1']);
+	prob.push(sAmusing.f(arr));
+	prob.push(sPathetic.f(arr));
+	prob.push(sInfuriate.f(arr));
+	prob.push(sNeutral.f(arr));
 
 	for(let i=0; i<prob.length; i++) {
-		if(max < prob[i]) {
+		if(max <= prob[i]) {
 			max = prob[i];
 			maxIndex = i;
 		}
 	}
+
+	console.log(prob);
 
 	switch(maxIndex) {
 		case 0: return 'amusing';
@@ -221,10 +219,14 @@ const svm_classify = (msg) => {
 }
 
 const train_SVM = (data) => {
-	let amusing_mat = [];
-	let neutral_mat = [];
-	let pathetic_mat = [];
-	let infuriating_mat = [];
+	let mat = [];
+
+	let amusing_label = [];
+	let neutral_label = [];
+	let pathetic_label = [];
+	let infuriating_label = [];
+
+	let max = 0;
 
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
@@ -234,44 +236,73 @@ const train_SVM = (data) => {
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 		let arr = tfidf.tfidfs(msg);
+		let arr2;
+
+		arr2 = arr.filter((e) => {
+			return e;
+		});
+		
+		if(!arr2.length) continue;
+
+		mat.push(arr);
 
 		if(data[i].classification === 'amusing') {
-			amusing_mat.push([arr, 1]);
-			neutral_mat.push([arr, 0]);
-			pathetic_mat.push([arr, 0]);
-			infuriating_mat.push([arr, 0]);
+			amusing_label.push(1);
+			neutral_label.push(-1);
+			pathetic_label.push(-1);
+			infuriating_label.push(-1);
 		} else if(data[i].classification === 'neutral') {
-			amusing_mat.push([arr, 0]);
-			neutral_mat.push([arr, 1]);
-			pathetic_mat.push([arr, 0]);
-			infuriating_mat.push([arr, 0]);
+			amusing_label.push(-1);
+			neutral_label.push(1);
+			pathetic_label.push(-1);
+			infuriating_label.push(-1);
 		} else if(data[i].classification === 'pathetic') {
-			amusing_mat.push([arr, 0]);
-			neutral_mat.push([arr, 0]);
-			pathetic_mat.push([arr, 1]);
-			infuriating_mat.push([arr, 0]);
+			amusing_label.push(-1);
+			neutral_label.push(-1);
+			pathetic_label.push(1);
+			infuriating_label.push(-1);
 		} else {
-			amusing_mat.push([arr, 0]);
-			neutral_mat.push([arr, 0]);
-			pathetic_mat.push([arr, 0]);
-			infuriating_mat.push([arr, 1]);
+			amusing_label.push(-1);
+			neutral_label.push(-1);
+			pathetic_label.push(-1);
+			infuriating_label.push(1);
 		}
 	}
 
-	sAmusing.train(amusing_mat);
-	sNeutral.train(neutral_mat);
-	sPathetic.train(pathetic_mat);
-	sInfuriate.train(infuriating_mat);
+	sAmusing = new ml.SVM({x: mat, y: amusing_label });
+	sNeutral = new ml.SVM({x: mat, y: neutral_label });
+	sPathetic = new ml.SVM({x: mat, y: pathetic_label });
+	sInfuriate = new ml.SVM({x: mat, y: infuriating_label });
+
+	sAmusing.train(svm_options);
+	sNeutral.train(svm_options);
+	sPathetic.train(svm_options);
+	sInfuriate.train(svm_options);
 
 	console.log('SVM done training.');
 }
 
 
-/****************************************************/
+const init = () => {
+	if(!emoticonsDone) {
+		if(!emoticonsLoading) {
+			emoticonsLoading = true;
 
-exports.process = preprocess;
+			config.emoticons.then(
+				(result) => {
+					emoticons = result;
+					emoticonsDone = true;
+					console.log('Emoticons done loading...');
+				}, (error) => {
+					process.exit(error.NO_EMOTICONS);
+				}
+			);
+		}
 
-exports.init = () => {
+		setTimeout(init, 1000);
+		return;
+	}
+
 	let data = JSON.parse(fs.readFileSync(__dirname + '/results.json', 'utf-8')).filter((n) => {
 		return preprocess(n.message).trim() !== '';
 	});
@@ -281,6 +312,16 @@ exports.init = () => {
 	train_bayes(data);
 	train_SVM(data);
 }
+
+/****************************************************/
+
+exports.process = preprocess;
+
+exports.preprocess = (req, res, next) => {
+	return res.send({message: preprocess(req.body.message)});
+}
+
+exports.init = init;
 
 
 exports.hello = (req, res, next) => {

@@ -10,6 +10,7 @@ module.exports = (router) => {
 	router.del = router.delete;
 
 	router.get('/', __.controller.hello);
+	router.post('/preprocess', __.controller.preprocess);
 	router.post('/naive_bayes', __.controller.naive_bayes);
 	router.post('/svm', __.controller.support_vector);
 
