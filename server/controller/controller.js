@@ -17,6 +17,8 @@ const svm_options = {
 	kernel: { type: 'polynomial', c: 1, d: 5},
 }
 
+const filename = 'tofix.txt';
+
 let sAmusing;
 let sNeutral;
 let sPathetic;
@@ -46,6 +48,10 @@ const preprocess = (msg) => {
 
 	msg = removeNounAndArticles(msg);
 	msg = normalize(msg);
+
+	if(!msg) {
+		fs.appendFileSync(filename, oldMsg + '\n');
+	}
 
 	return msg;
 }
@@ -208,7 +214,7 @@ const svm_classify = (msg) => {
 		}
 	}
 
-	console.log(prob);
+	//console.log(prob);
 
 	switch(maxIndex) {
 		case 0: return 'amusing';
@@ -285,6 +291,7 @@ const train_SVM = (data) => {
 
 const init = () => {
 	if(!emoticonsDone) {
+		fs.writeFileSync(filename, '');
 		if(!emoticonsLoading) {
 			emoticonsLoading = true;
 

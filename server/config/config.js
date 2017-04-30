@@ -42,8 +42,23 @@ module.exports = {
 			short: 'cn',
 			long: 'china'
 		},{
+			short: 'cs',
+			long: 'creep score'
+		},{
+			short: 'dmg',
+			long: 'damage'
+		},{
 			short: 'eu',
 			long: 'europe'
+		},{
+			short: 'ez',
+			long: 'easy'
+		},{
+			short: 'feelsbadman',
+			long: 'feels bad man',
+		},{
+			short: 'feelsgoodman',
+			long: 'feels good man',
 		},{
 			short: 'ftw',
 			long: 'for the win',
@@ -54,8 +69,20 @@ module.exports = {
 			short: 'ggwp',
 			long: 'good game well played',
 		},{
+			short: 'gl',
+			long: 'good luck',
+		},{
+			short: 'glhf',
+			long: 'good luck have fun',
+		},{
+			short: 'gpa',
+			long: 'grade point average',
+		},{
 			short: 'gr8',
 			long: 'great',
+		},{
+			short: 'hahaa',
+			long: 'haha',
 		},{
 			short: 'imho',
 			long: 'in my honest opnion',
@@ -72,11 +99,20 @@ module.exports = {
 			short: 'lol',
 			long: 'laugh out loud',
 		},{
+			short: 'lul',
+			long: 'laugh out loud',
+		},{
+			short: 'mvp',
+			long: 'most valuable player'
+		},{
 			short: 'na',
 			long: 'north america'
 		},{
 			short: 'np',
 			long: 'no problem',
+		},{
+			short: 'nt',
+			long: 'nice try',
 		},{
 			short: 'nub',
 			long: 'noob',
