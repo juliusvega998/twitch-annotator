@@ -10,14 +10,14 @@ const tfidf			= new natural.TfIdf();
 const bayes 		= new natural.BayesClassifier();
 
 const svm_options = {
-	C: 1.0,
+	C: 10,
 	tol: 1e-5,
-	max_passes: 20,
+	max_passes: 100,
 
-	kernel: { type: 'polynomial', c: 1, d: 5},
+	kernel: { type: 'polynomial', c: 5, d: 3},
 }
 
-const filename = 'tofix.txt';
+const filename = 'output.txt';
 
 let sAmusing;
 let sNeutral;
@@ -48,10 +48,6 @@ const preprocess = (msg) => {
 
 	msg = removeNounAndArticles(msg);
 	msg = normalize(msg);
-
-	if(!msg) {
-		fs.appendFileSync(filename, oldMsg + '\n');
-	}
 
 	return msg;
 }
@@ -288,22 +284,26 @@ const train_SVM = (data) => {
 	console.log('SVM done training.');
 }
 
+const loadEmoticons = (callback) => {
+	config.emoticons.then(
+		(result) => {
+			emoticons = result;
+			callback();
+
+			console.log('Emoticons done loading...');
+		}, (error) => {
+			process.exit(error.NO_EMOTICONS);
+		}
+	);
+}
 
 const init = () => {
 	if(!emoticonsDone) {
-		fs.writeFileSync(filename, '');
 		if(!emoticonsLoading) {
 			emoticonsLoading = true;
-
-			config.emoticons.then(
-				(result) => {
-					emoticons = result;
-					emoticonsDone = true;
-					console.log('Emoticons done loading...');
-				}, (error) => {
-					process.exit(error.NO_EMOTICONS);
-				}
-			);
+			loadEmoticons(() => {
+				emoticonsDone = true;
+			});
 		}
 
 		setTimeout(init, 1000);
@@ -315,6 +315,12 @@ const init = () => {
 	});
 
 	console.log(data.length + ' training data loaded.');
+
+
+	/*fs.writeFileSync(filename, '');
+	data.forEach((item, index) => {
+		fs.appendFileSync(filename, item.message + '|' + item.classification + '\n');
+	})*/
 
 	train_bayes(data);
 	train_SVM(data);
@@ -329,7 +335,8 @@ exports.preprocess = (req, res, next) => {
 }
 
 exports.init = init;
-
+exports.loadEmoticons = loadEmoticons;
+exports.svm_options = svm_options;
 
 exports.hello = (req, res, next) => {
 	return res.send({message: 'Hello World!'});

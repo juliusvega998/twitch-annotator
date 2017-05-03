@@ -1,99 +1,7 @@
 {
 	"train": [
 		{
-			"message": "ASTRALIS TOP 1 4Head",
-			"classification": "amusing"
-		},
-		{
-			"message": "kwertiee embarassing really",
-			"classification": "pathetic"
-		},
-		{
-			"message": "HAHAHA",
-			"classification": "amusing"
-		},
-		{
-			"message": "guardian is a god mouse get rekt",
-			"classification": "amusing"
-		},
-		{
-			"message": "HATING FeelsGoodMan ✅ OTHERS FeelsGoodMan ✅ DOES FeelsGoodMan ✅ FILL FeelsGoodMan ✅ THE FeelsGoodMan ✅ VOID FeelsGoodMan ✅ INSIDE Kappa",
-			"classification": "amusing"
-		},
-		{
-			"message": "GO DC I BELIEVE PogChamp",
-			"classification": "amusing"
-		},
-		{
-			"message": "▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬ SeemsGood SeemsGood SeemsGood THANKS PURGE SeemsGood SeemsGood SeemsGood ▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬",
-			"classification": "amusing"
-		},
-		{
-			"message": "nice ult",
-			"classification": "amusing"
-		},
-		{
-			"message": "NA DOTA LUL",
-			"classification": "amusing"
-		},
-		{
-			"message": "CAP IS AN ASS",
-			"classification": "pathetic"
-		},
-		{
-			"message": "START THE GAME",
-			"classification": "neutral"
-		},
-		{
-			"message": "tomorrow is CLG vs TSM",
-			"classification": "amusing"
-		},
-		{
-			"message": "SAME",
-			"classification": "amusing"
-		},
-		{
-			"message": "who is reckful this kid sucks",
-			"classification": "pathetic"
-		},
-		{
-			"message": "golden Kappa check",
-			"classification": "amusing"
-		},
-		{
-			"message": "TARGET VOYBOY LUL",
-			"classification": "pathetic"
-		},
-		{
-			"message": "Out of space",
-			"classification": "neutral"
-		},
-		{
-			"message": "Navi is doing great",
-			"classification": "neutral"
-		},
-		{
-			"message": "pasha throwing",
-			"classification": "infuriating"
-		},
-		{
-			"message": "can i get it pack here?",
-			"classification": "neutral"
-		},
-		{
-			"message": "FNATIC ༼ つ ◕_◕ ༽つ TAKE MY ENERGY ༼ つ ◕_◕ ༽つ",
-			"classification": "amusing"
-		},
-		{
-			"message": "Who won",
-			"classification": "neutral"
-		},
-		{
-			"message": "they're feeding",
-			"classification": "pathetic"
-		},
-		{
-			"message": "LEGS IS THE WORD OF THE DAY! SHEEVER SPREAD THE WORD!!! Kappa!",
+			"message": "SoonerLater",
 			"classification": "amusing"
 		},
 		{
@@ -105,12 +13,32 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "OSfrog",
+			"classification": "amusing"
+		},
+		{
+			"message": "jakiro Kappa",
+			"classification": "amusing"
+		},
+		{
 			"message": "gambling Banned",
+			"classification": "infuriating"
+		},
+		{
+			"message": "PermaSmug KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride KappaPride",
 			"classification": "infuriating"
 		},
 		{
 			"message": "haHAA GO RECKFUL haHAA",
 			"classification": "infuriating"
+		},
+		{
+			"message": "HOMEWORKS DansGame",
+			"classification": "infuriating"
+		},
+		{
+			"message": "BibleThump BibleThump BibleThump",
+			"classification": "amusing"
 		},
 		{
 			"message": "Jebaited HalloFedora how do we kill trundle?",
@@ -123,9 +51,11 @@
 		{
 			"message": "HAPP NEW YEAR",
 			"classification": "neutral"
-		}
-	],
-	"test": [
+		},
+		{
+			"message": "OSsloth //",
+			"classification": "pathetic"
+		},
 		{
 			"message": "TSM EleGiggle NA EleGiggle",
 			"classification": "pathetic"
@@ -195,6 +125,18 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "NotLikeThis",
+			"classification": "amusing"
+		},
+		{
+			"message": "ARMPIT LUL",
+			"classification": "infuriating"
+		},
+		{
+			"message": "JESUS CHRIST PogChamp",
+			"classification": "infuriating"
+		},
+		{
 			"message": "LIVE PogChamp",
 			"classification": "infuriating"
 		},
@@ -233,7 +175,9 @@
 		{
 			"message": "TALK ABOUT HIS 1 TAPS",
 			"classification": "amusing"
-		},
+		}
+	],
+	"test": [
 		{
 			"message": "START",
 			"classification": "neutral"
@@ -255,8 +199,16 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "SMOrc TwitchRPGTwitchRPG🐍",
+			"classification": "infuriating"
+		},
+		{
 			"message": "D: TIME TO WIN THE ARCANA D:",
 			"classification": "amusing"
+		},
+		{
+			"message": "SMOrc //",
+			"classification": "neutral"
 		},
 		{
 			"message": "So exciting.Who is going to win?",
@@ -307,6 +259,10 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "EZ Gambit",
+			"classification": "pathetic"
+		},
+		{
 			"message": "GO GAMBIT GO",
 			"classification": "amusing"
 		},
@@ -335,12 +291,20 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "19-7 4Head",
+			"classification": "amusing"
+		},
+		{
 			"message": "yea maut keep repeating what ld just said",
 			"classification": "infuriating"
 		},
 		{
 			"message": "▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬ SeemsGood SeemsGood SeemsGood THANKS PURGE SeemsGood SeemsGood SeemsGood ▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬",
 			"classification": "amusing"
+		},
+		{
+			"message": "NotLikeThis STOPP PLSSS",
+			"classification": "pathetic"
 		},
 		{
 			"message": "I'm Harambe, and this is my zoo. I live here with my old zookeeper and banana, Big Yellow. Everything in here has a heart and a mind. One thing I've learned after 17 years - you never know WHAT is gonna come over that fence.",
@@ -363,6 +327,10 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "THAT *** PogChamp",
+			"classification": "pathetic"
+		},
+		{
 			"message": "SSG WON",
 			"classification": "amusing"
 		},
@@ -379,6 +347,10 @@
 			"classification": "neutral"
 		},
 		{
+			"message": "PJSalt PJSalt PJSalt PJSalt",
+			"classification": "amusing"
+		},
+		{
 			"message": "'USA' with only one American LUL",
 			"classification": "infuriating"
 		},
@@ -387,8 +359,20 @@
 			"classification": "neutral"
 		},
 		{
+			"message": "3 OT PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "she thic",
 			"classification": "infuriating"
+		},
+		{
+			"message": "SMIX Kreygasm",
+			"classification": "pathetic"
+		},
+		{
+			"message": "ResidentSleeper ResidentSleeper ResidentSleeper ResidentSleeper ResidentSleeper",
+			"classification": "pathetic"
 		},
 		{
 			"message": "nooo",
@@ -399,8 +383,24 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "KappaPride DC KappaPride DC KappaPride DC KappaPride DC KappaPride DC KappaPride DC",
+			"classification": "amusing"
+		},
+		{
 			"message": "FUCK THIS",
 			"classification": "infuriating"
+		},
+		{
+			"message": "SLARK PICKERS WutFace",
+			"classification": "amusing"
+		},
+		{
+			"message": "PogChamp PogChamp PogChamp PogChamp PogChamp",
+			"classification": "amusing"
+		},
+		{
+			"message": "MMMMMMEEEEEEPPPPPOO Keepo",
+			"classification": "amusing"
 		},
 		{
 			"message": "DatSheffy NA SCRIMS DatSheffy NA QUALIFIERS DatSheffy NA STRATS DatSheffy NA TEAM HOUSE DatSheffy MUST BE NA DatSheffy",
@@ -419,11 +419,27 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "BibleThump BibleThump BibleThump BibleThump BibleThump BibleThump BibleThump BibleThump",
+			"classification": "amusing"
+		},
+		{
+			"message": "OG LUL",
+			"classification": "pathetic"
+		},
+		{
 			"message": "haHAA here we go guys haHAA",
 			"classification": "amusing"
 		},
 		{
+			"message": "PogChamp PogChamp PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "lol LOOK AT THAT dork",
+			"classification": "infuriating"
+		},
+		{
+			"message": "STUTTER GOD? PogChamp",
 			"classification": "infuriating"
 		},
 		{
@@ -433,6 +449,10 @@
 		{
 			"message": "BANG",
 			"classification": "neutral"
+		},
+		{
+			"message": "TSM FeelsBadMan",
+			"classification": "amusing"
 		},
 		{
 			"message": "OMG OMG OMG OMG",
@@ -445,6 +465,10 @@
 		{
 			"message": "POPPY TOO STRONK!!!!!!!!",
 			"classification": "pathetic"
+		},
+		{
+			"message": "WutFace LIGHTINGS",
+			"classification": "neutral"
 		},
 		{
 			"message": "I WANT ELEMENTALIST LUX",
@@ -471,11 +495,19 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "EU DOTA PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "LETS GO DC",
 			"classification": "amusing"
 		},
 		{
 			"message": "SECRET BabyRage",
+			"classification": "infuriating"
+		},
+		{
+			"message": "PPD = POO POO DICK PJSalt PJSalt PJSalt PJSalt",
 			"classification": "infuriating"
 		},
 		{
@@ -487,8 +519,16 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "LUCIAN PogChamp",
+			"classification": "neutral"
+		},
+		{
 			"message": "FAKER PogChamp",
 			"classification": "infuriating"
+		},
+		{
+			"message": "scripted lul",
+			"classification": "amusing"
 		},
 		{
 			"message": "feels good man",
@@ -507,7 +547,23 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "EagleEye",
+			"classification": "neutral"
+		},
+		{
+			"message": "MILF Kreygasm MILF Kreygasm MILF Kreygasm MILF Kreygasm",
+			"classification": "amusing"
+		},
+		{
 			"message": "HARAMBE WOULD WANT A DC WIN",
+			"classification": "pathetic"
+		},
+		{
+			"message": "PJSalt",
+			"classification": "infuriating"
+		},
+		{
+			"message": "FeelsBadMan DC cmon",
 			"classification": "pathetic"
 		},
 		{
@@ -525,6 +581,22 @@
 		{
 			"message": "guys who is on final match",
 			"classification": "pathetic"
+		},
+		{
+			"message": "NO DMG WutFace",
+			"classification": "neutral"
+		},
+		{
+			"message": "dindu nuffin TriHard",
+			"classification": "amusing"
+		},
+		{
+			"message": "RIP CHAT 4Head",
+			"classification": "amusing"
+		},
+		{
+			"message": "BibleThump STAPH BibleThump",
+			"classification": "neutral"
 		},
 		{
 			"message": "kkOma cries",
@@ -567,6 +639,10 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "slark worth Kreygasm",
+			"classification": "amusing"
+		},
+		{
 			"message": "when game starts 500k viewers PogChamp",
 			"classification": "amusing"
 		},
@@ -587,6 +663,10 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "DMG graphs LUL",
+			"classification": "amusing"
+		},
+		{
 			"message": "faker said he is going to do 3 back flips this time LUL",
 			"classification": "amusing"
 		},
@@ -595,8 +675,16 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "NO BENGI LUL",
+			"classification": "neutral"
+		},
+		{
 			"message": "CANADA ? USA",
 			"classification": "neutral"
+		},
+		{
+			"message": "SeemsGood",
+			"classification": "amusing"
 		},
 		{
 			"message": "KappaPride EG KappaPride ELIMINATION KappaPride GETTING KappaPride CLOSER KappaPride ANY KappaPride LAST KappaPride WORDS KappaPride EG KappaPride AMERIFATS? KappaPride",
@@ -611,12 +699,20 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "GO DGIGITGIAL CHAOS",
 			"classification": "amusing"
 		},
 		{
 			"message": "EU PLAYERS PogChamp EU PLAYERS PogChamp EU PLAYERS PogChamp EU PLAYERS PogChamp EU PLAYERS PogChamp EU PLAYERS PogChampSHEEVER SAYS DC WIN EZ FOR EG",
 			"classification": "amusing"
+		},
+		{
+			"message": "LUL LUL",
+			"classification": "neutral"
 		},
 		{
 			"message": "WAIT FAKER IS USING A SKIN??>????",
@@ -639,11 +735,31 @@
 			"classification": "neutral"
 		},
 		{
+			"message": "ZEWS lUl",
+			"classification": "amusing"
+		},
+		{
 			"message": "tacoloco 1 tacoloco 2 tacoloco3 estoy tan loco de tantotacoloco",
 			"classification": "pathetic"
 		},
 		{
+			"message": "Kenny BibleThump",
+			"classification": "amusing"
+		},
+		{
+			"message": "ez",
+			"classification": "amusing"
+		},
+		{
 			"message": "nice",
+			"classification": "amusing"
+		},
+		{
+			"message": "edward WutFace",
+			"classification": "amusing"
+		},
+		{
+			"message": "EBOLA 4Head",
 			"classification": "amusing"
 		},
 		{
@@ -655,16 +771,32 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "TL haHAA",
+			"classification": "amusing"
+		},
+		{
 			"message": "WHEN STARTS THE GAME???",
 			"classification": "pathetic"
+		},
+		{
+			"message": "FeelsGoodMan",
+			"classification": "amusing"
 		},
 		{
 			"message": "▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬ SwiftRage SwiftRage SwiftRage ▬ TOBIWAN OR RIOT! ▬ SwiftRage SwiftRage SwiftRage ▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬",
 			"classification": "infuriating"
 		},
 		{
+			"message": "Mau5 FeelsGoodMan",
+			"classification": "amusing"
+		},
+		{
 			"message": "guys did america win again?",
 			"classification": "pathetic"
+		},
+		{
+			"message": "11-0 PogChamp PogChamp",
+			"classification": "amusing"
 		},
 		{
 			"message": "ARE YOU FUCKING KIDDING ME ? SHANE PLEASE SHUT THE FUCK UP",
@@ -679,7 +811,19 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "BCWarrior LEL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "PJSalt LUL",
+			"classification": "pathetic"
+		},
+		{
 			"message": "American Rule 1: when DC win, they are U.S team, when they lose, they are EU team LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "No orchestra FeelsBadMan",
 			"classification": "pathetic"
 		},
 		{
@@ -695,8 +839,20 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "METEOS LUL",
+			"classification": "amusing"
+		},
+		{
 			"message": "JHIN INC.",
 			"classification": "amusing"
+		},
+		{
+			"message": "353 CS",
+			"classification": "amusing"
+		},
+		{
+			"message": "VoHiYo",
+			"classification": "pathetic"
 		},
 		{
 			"message": "SourPls RAP FCKING GOD SourPls",
@@ -709,6 +865,10 @@
 		{
 			"message": "all of these are so good",
 			"classification": "amusing"
+		},
+		{
+			"message": "ResidentSleeper crowd",
+			"classification": "neutral"
 		},
 		{
 			"message": "SPIN 2 WIN",
@@ -729,6 +889,10 @@
 		{
 			"message": "WOOOOOOOOOOOOOOOOOO",
 			"classification": "amusing"
+		},
+		{
+			"message": "OSfrog RACLE",
+			"classification": "pathetic"
 		},
 		{
 			"message": "KUNG FU PANDA OP",
@@ -763,6 +927,10 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "VoHiYo EMILIA > ONODERA VoHiYo",
+			"classification": "amusing"
+		},
+		{
 			"message": "RUSH?",
 			"classification": "amusing"
 		},
@@ -773,6 +941,10 @@
 		{
 			"message": "Type 1 IF YOU FAPPED TODAY",
 			"classification": "amusing"
+		},
+		{
+			"message": "BibleThump PEANUT",
+			"classification": "infuriating"
 		},
 		{
 			"message": "STFU I JUNGLE",
@@ -795,12 +967,20 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "BibleThump LEPO LEPO BibleThump",
+			"classification": "pathetic"
+		},
+		{
 			"message": "HEY PPD (° ͜ʖ͡°)╭∩╮",
 			"classification": "infuriating"
 		},
 		{
 			"message": "STFU ABOUT UR SHIT ARCANA",
 			"classification": "infuriating"
+		},
+		{
+			"message": "SUMAIL SPIRIT ANELE",
+			"classification": "amusing"
 		},
 		{
 			"message": "SHEEVER DYING BibleThumo",
@@ -817,6 +997,10 @@
 		{
 			"message": "2-1 LOL 5 GAMES",
 			"classification": "pathetic"
+		},
+		{
+			"message": "VLAD DansGame",
+			"classification": "infuriating"
 		},
 		{
 			"message": "FAKER TILTED",
@@ -847,12 +1031,28 @@
 			"classification": "neutral"
 		},
 		{
+			"message": "KappaPride KappaPride KappaPride KappaPride",
+			"classification": "amusing"
+		},
+		{
 			"message": "PogChamp IM WATCHING AT TWITCH",
 			"classification": "amusing"
 		},
 		{
+			"message": "MAUT WutFace",
+			"classification": "neutral"
+		},
+		{
 			"message": "ACTUAL YEAR",
 			"classification": "neutral"
+		},
+		{
+			"message": "NECK PILLOW LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "tnc LUL",
+			"classification": "pathetic"
 		},
 		{
 			"message": "5v5 IRL",
@@ -861,6 +1061,10 @@
 		{
 			"message": "WOOO",
 			"classification": "amusing"
+		},
+		{
+			"message": "322 LUL",
+			"classification": "pathetic"
 		},
 		{
 			"message": "Ruined",
@@ -895,6 +1099,10 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "KKona PogChamp",
+			"classification": "neutral"
+		},
+		{
 			"message": "faker",
 			"classification": "amusing"
 		},
@@ -905,6 +1113,18 @@
 		{
 			"message": "NA TIMBER NotLikeThis",
 			"classification": "pathetic"
+		},
+		{
+			"message": "ZEUS PogChamp",
+			"classification": "amusing"
+		},
+		{
+			"message": "Dazle MVP Kappa Dazle MVP Kappa Dazle MVP Kappa Dazle MVP Kappa Dazle MVP Kappa",
+			"classification": "amusing"
+		},
+		{
+			"message": "LSD SeemsGood",
+			"classification": "amusing"
 		},
 		{
 			"message": "SHIT POOP FART",
@@ -947,8 +1167,16 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "SJOKZ Kreygasm",
+			"classification": "amusing"
+		},
+		{
 			"message": "LUL WHERE IS HECARIM LUL",
 			"classification": "neutral"
+		},
+		{
+			"message": "retard grill LUL",
+			"classification": "infuriating"
 		},
 		{
 			"message": "wow",
@@ -971,8 +1199,16 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "KNOWE LUL",
+			"classification": "pathetic"
+		},
+		{
 			"message": "GO SEAHWKS",
 			"classification": "pathetic"
+		},
+		{
+			"message": "Jakiro PogChamp",
+			"classification": "amusing"
 		},
 		{
 			"message": "The Hype is real!",
@@ -983,8 +1219,24 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "TIO? LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "FREESM 4Head",
+			"classification": "infuriating"
+		},
+		{
 			"message": "CLASSIC LUL",
 			"classification": "infuriating"
+		},
+		{
+			"message": "AsianGlow",
+			"classification": "infuriating"
+		},
+		{
+			"message": "ANELE HalloHalo HalloHalo HalloHalo HalloHalo HalloHalo HalloHalo HalloHalo",
+			"classification": "pathetic"
 		},
 		{
 			"message": "pull the TriHard",
@@ -992,6 +1244,10 @@
 		},
 		{
 			"message": "HOLY SHIT",
+			"classification": "infuriating"
+		},
+		{
+			"message": "PURGE WutFace",
 			"classification": "infuriating"
 		},
 		{
@@ -1003,7 +1259,19 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "YAKUZA  PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "FUCK U STUPID CHAT 4Head",
+			"classification": "pathetic"
+		},
+		{
+			"message": "▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬ NotLikeThis NotLikeThis NotLikeThis RIGGED ARCANA NotLikeThis NotLikeThis NotLikeThis ▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬",
+			"classification": "pathetic"
+		},
+		{
+			"message": "-2 OSfrog",
 			"classification": "pathetic"
 		},
 		{
@@ -1023,12 +1291,20 @@
 			"classification": "infuriating"
 		},
 		{
+			"message": "ez game OSfrog",
+			"classification": "pathetic"
+		},
+		{
 			"message": "LUL DIGITAL CUCKS LUL",
 			"classification": "pathetic"
 		},
 		{
 			"message": "NA LUL",
 			"classification": "pathetic"
+		},
+		{
+			"message": "PogChamp // RESPEK",
+			"classification": "infuriating"
 		},
 		{
 			"message": "spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist spethTrist",
@@ -1040,6 +1316,22 @@
 		},
 		{
 			"message": "WHAT HAIR LUL",
+			"classification": "amusing"
+		},
+		{
+			"message": "PEANUT BibleThump",
+			"classification": "amusing"
+		},
+		{
+			"message": "ArsonNoSexy ArsonNoSexy ArsonNoSexy ArsonNoSexy ArsonNoSexy SwiftRage SwiftRage PJSalt PJSalt",
+			"classification": "pathetic"
+		},
+		{
+			"message": "thrice LUL",
+			"classification": "infuriating"
+		},
+		{
+			"message": "FeelsGoodMan 👉 👌 .",
 			"classification": "amusing"
 		},
 		{
@@ -1057,6 +1349,14 @@
 		{
 			"message": "NA PAYING EU TO WIN TI6 , GOOD GUY NA SeemsGood NA PAYING EU TO WIN TI6 , GOOD GUY NA SeemsGood",
 			"classification": "infuriating"
+		},
+		{
+			"message": "LEPO LEPO BibleThump LEPO LEPO BibleThump LEPO LEPO BibleThump",
+			"classification": "amusing"
+		},
+		{
+			"message": "ez 1k gold",
+			"classification": "amusing"
 		},
 		{
 			"message": "CHARLIE DO A DAB",
@@ -1087,11 +1387,23 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "CHAT FeelsBadMan",
+			"classification": "pathetic"
+		},
+		{
 			"message": "Whats the score",
 			"classification": "neutral"
 		},
 		{
+			"message": "H2K CoolStoryBob",
+			"classification": "infuriating"
+		},
+		{
 			"message": "fake",
+			"classification": "neutral"
+		},
+		{
+			"message": "NO TANKS PogChamp",
 			"classification": "neutral"
 		},
 		{
@@ -1099,8 +1411,20 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "imGlitch imGlitch",
+			"classification": "infuriating"
+		},
+		{
 			"message": "WTF THAT MAEN",
 			"classification": "pathetic"
+		},
+		{
+			"message": "LIQUID LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "PMSTwin",
+			"classification": "amusing"
 		},
 		{
 			"message": "haHAA ONE OF US haHAA",
@@ -1111,7 +1435,19 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "DC PogChamp DC PogChamp DC PogChamp DC PogChamp",
+			"classification": "amusing"
+		},
+		{
 			"message": "FeelsBadMan TI6 ends FeelsBadMan my life ends with it FeelsBadMan .",
+			"classification": "pathetic"
+		},
+		{
+			"message": "C9 LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "NO BRAIN LUL",
 			"classification": "pathetic"
 		},
 		{
@@ -1129,6 +1465,10 @@
 		{
 			"message": "I LIKE SKT SKINS Kappa",
 			"classification": "amusing"
+		},
+		{
+			"message": "ANELE نقمسمث ANELE",
+			"classification": "pathetic"
 		},
 		{
 			"message": "Bang.??",
@@ -1151,6 +1491,18 @@
 			"classification": "amusing"
 		},
 		{
+			"message": "OSfrog KENCH UNBENCHED OSfrog",
+			"classification": "infuriating"
+		},
+		{
+			"message": "FeelsBadMan 🔫",
+			"classification": "infuriating"
+		},
+		{
+			"message": "ANELE EU",
+			"classification": "infuriating"
+		},
+		{
 			"message": "no *** its an NA crowd, its in *** NA",
 			"classification": "infuriating"
 		},
@@ -1167,6 +1519,10 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "GGGG LUL LUL",
+			"classification": "pathetic"
+		},
+		{
 			"message": "THANKS PURGE",
 			"classification": "amusing"
 		},
@@ -1175,8 +1531,16 @@
 			"classification": "pathetic"
 		},
 		{
+			"message": "no purge NotLikeThis",
+			"classification": "pathetic"
+		},
+		{
 			"message": "KappaPride EG KappaPride ELIMINATION KappaPride GETTING KappaPride CLOSER KappaPride ANY KappaPride LAST KappaPride WORD KappaPride EG KappaPride FANTARDS KappaPride",
 			"classification": "amusing"
+		},
+		{
+			"message": "SLACKS MVP",
+			"classification": "pathetic"
 		},
 		{
 			"message": "SoonerLater BEEN IN PRO SCENE SINCE WC3 SoonerLater ATTENDED EVERY TI AND MAJOR SoonerLater MAKES EVERY TEAM BETTER SoonerLater SUPER NICE GUY SoonerLater HUGE DICK SoonerLater WATCH OUT PUPPEY SoonerLater ITS MISERY SoonerLater",
@@ -1187,12 +1551,20 @@
 			"classification": "neutral"
 		},
 		{
+			"message": "CoolStoryBob",
+			"classification": "neutral"
+		},
+		{
 			"message": "bring the ***",
 			"classification": "amusing"
 		},
 		{
 			"message": "NA CROWD LUL",
 			"classification": "pathetic"
+		},
+		{
+			"message": "BloodTrail",
+			"classification": "amusing"
 		},
 		{
 			"message": "NA ARROW",
@@ -1208,6 +1580,186 @@
 		},
 		{
 			"message": "WHO?",
+			"classification": "amusing"
+		},
+		{
+			"message": "Equal-RYZE 4Head",
+			"classification": "neutral"
+		},
+		{
+			"message": "gl",
+			"classification": "neutral"
+		},
+		{
+			"message": "ASTRALIS TOP 1 4Head",
+			"classification": "amusing"
+		},
+		{
+			"message": "kwertiee embarassing really",
+			"classification": "pathetic"
+		},
+		{
+			"message": "HAHAHA",
+			"classification": "amusing"
+		},
+		{
+			"message": "Kappa Kappa Kappa",
+			"classification": "amusing"
+		},
+		{
+			"message": "guardian is a god mouse get rekt",
+			"classification": "amusing"
+		},
+		{
+			"message": "4Head",
+			"classification": "neutral"
+		},
+		{
+			"message": "HATING FeelsGoodMan ✅ OTHERS FeelsGoodMan ✅ DOES FeelsGoodMan ✅ FILL FeelsGoodMan ✅ THE FeelsGoodMan ✅ VOID FeelsGoodMan ✅ INSIDE Kappa",
+			"classification": "amusing"
+		},
+		{
+			"message": "PogChamp",
+			"classification": "amusing"
+		},
+		{
+			"message": "Kappa",
+			"classification": "amusing"
+		},
+		{
+			"message": "GO DC I BELIEVE PogChamp",
+			"classification": "amusing"
+		},
+		{
+			"message": "▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬ SeemsGood SeemsGood SeemsGood THANKS PURGE SeemsGood SeemsGood SeemsGood ▬▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬",
+			"classification": "amusing"
+		},
+		{
+			"message": "Kreygasm />",
+			"classification": "amusing"
+		},
+		{
+			"message": "nice ult",
+			"classification": "amusing"
+		},
+		{
+			"message": "NA DOTA LUL",
+			"classification": "amusing"
+		},
+		{
+			"message": "CAP IS AN ASS",
+			"classification": "pathetic"
+		},
+		{
+			"message": "MingLee",
+			"classification": "neutral"
+		},
+		{
+			"message": "KappaPride",
+			"classification": "amusing"
+		},
+		{
+			"message": "START THE GAME",
+			"classification": "neutral"
+		},
+		{
+			"message": "CAGE THE PLEBS Jebaited Jebaited Jebaited Jebaited Jebaited Jebaited",
+			"classification": "infuriating"
+		},
+		{
+			"message": "tomorrow is CLG vs TSM",
+			"classification": "amusing"
+		},
+		{
+			"message": "SAME",
+			"classification": "amusing"
+		},
+		{
+			"message": "who is reckful this kid sucks",
+			"classification": "pathetic"
+		},
+		{
+			"message": "haHaa WHOOO haHAA",
+			"classification": "infuriating"
+		},
+		{
+			"message": "golden Kappa check",
+			"classification": "amusing"
+		},
+		{
+			"message": "GPA LUL",
+			"classification": "infuriating"
+		},
+		{
+			"message": "TriHard",
+			"classification": "pathetic"
+		},
+		{
+			"message": "CUBAN PogChamp",
+			"classification": "infuriating"
+		},
+		{
+			"message": "TARGET VOYBOY LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "KappaPride",
+			"classification": "amusing"
+		},
+		{
+			"message": "Out of space",
+			"classification": "neutral"
+		},
+		{
+			"message": "Navi is doing great",
+			"classification": "neutral"
+		},
+		{
+			"message": "pasha throwing",
+			"classification": "infuriating"
+		},
+		{
+			"message": "can i get it pack here?",
+			"classification": "neutral"
+		},
+		{
+			"message": "nt",
+			"classification": "neutral"
+		},
+		{
+			"message": "virtus amature LUL",
+			"classification": "pathetic"
+		},
+		{
+			"message": "FNATIC ༼ つ ◕_◕ ༽つ TAKE MY ENERGY ༼ つ ◕_◕ ༽つ",
+			"classification": "amusing"
+		},
+		{
+			"message": "Who won",
+			"classification": "neutral"
+		},
+		{
+			"message": "Mau5",
+			"classification": "amusing"
+		},
+		{
+			"message": "Kreygasm Kreygasm Kreygasm Kreygasm Kreygasm Kreygasm Kreygasm",
+			"classification": "amusing"
+		},
+		{
+			"message": "they're feeding",
+			"classification": "pathetic"
+		},
+		{
+			"message": "LEGS IS THE WORD OF THE DAY! SHEEVER SPREAD THE WORD!!! Kappa!",
+			"classification": "amusing"
+		},
+		{
+			"message": "ONE PUNCH MAN PogChamp",
+			"classification": "amusing"
+		},
+		{
+			"message": "BibleThump",
 			"classification": "amusing"
 		}
 	]
