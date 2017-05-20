@@ -2,24 +2,6 @@
 	const chat_url = 'https://rechat.twitch.tv/rechat-messages?start=TIME&video_id=vVIDID';
 	const local_url = 'https://localhost:3000';
 
-    const resultBayes= {
-        amusing: 0,
-        neutral: 0,
-        pathetic: 0,
-        infuriating: 0,
-        unclassified: 0,
-        total: 0
-    }
-
-    const resultSVM= {
-        amusing: 0,
-        neutral: 0,
-        pathetic: 0,
-        infuriating: 0,
-        unclassified: 0,
-        total: 0
-    }
-
     const amuse_col         = '#0F0';
     const neutral_col       = '#CCC';
     const pathetic_col      = '#00F';
@@ -40,22 +22,7 @@
             let classes = JSON.parse(data.data);
             let color;
 
-            resultBayes.amusing += classes.amusing;
-            resultBayes.neutral += classes.neutral;
-            resultBayes.pathetic += classes.pathetic;
-            resultBayes.infuriating += classes.infuriating;
-            resultBayes.unclassified += classes.unclassified;
-            resultBayes.total += classes.total;
-
-            $('div#annotator-bayes').html(
-                "Naive Bayes" + "<br />" +
-                "Amusing: " + resultBayes.amusing + "<br />" +
-                "Neutral: " + resultBayes.neutral + "<br />" +
-                "Pathetic: " + resultBayes.pathetic + "<br />" +
-                "Infuriating: " + resultBayes.infuriating + "<br />" +
-                "Unclassified: " + resultBayes.unclassified + "<br />" +
-                "Total: " + resultBayes.total + "<br />"
-            )
+            $('div#annotator-bayes').html("Naive Bayes")
 
             color = getMaxSentimentColor(classes);
             drawRect(i, amuse_col, svg_bayes);
@@ -74,23 +41,8 @@
         }).done(function(data) {
             let classes = JSON.parse(data.data);
             let color;
-            
-            resultSVM.amusing += classes.amusing;
-            resultSVM.neutral += classes.neutral;
-            resultSVM.pathetic += classes.pathetic;
-            resultSVM.infuriating += classes.infuriating;
-            resultSVM.unclassified += classes.unclassified;
-            resultSVM.total += classes.total;
 
-            $('div#annotator-svm').html(
-                "SVM" + "<br />" +
-                "Amusing: " + resultSVM.amusing + "<br />" +
-                "Neutral: " + resultSVM.neutral + "<br />" +
-                "Pathetic: " + resultSVM.pathetic + "<br />" +
-                "Infuriating: " + resultSVM.infuriating + "<br />" +
-                "Unclassified: " + resultSVM.unclassified + "<br />" +
-                "Total: " + resultSVM.total + "<br />"
-            )
+            $('div#annotator-svm').html("SVM")
 
             color = getMaxSentimentColor(classes);
             drawRect(i, color, svg_svm);
@@ -171,10 +123,10 @@
 
     let insertTag = function() {
         if($('div#channel > div.mg-b-2').length) {
-            $('div#channel > div.mg-b-2').append('<div id=\'drawer-bayes\'></div>');
             $('div#channel > div.mg-b-2').append('<div id=\'annotator-bayes\'></div>');
-            $('div#channel > div.mg-b-2').append('<div id=\'drawer-svm\'></div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'drawer-bayes\'></div>');
             $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'></div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'drawer-svm\'></div>');
 
             getMessages(vid_id, 0, 0, 0);
 
