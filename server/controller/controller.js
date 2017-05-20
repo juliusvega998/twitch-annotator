@@ -39,6 +39,7 @@ const preprocess = (msg) => {
 	msg = removePattern(msg, commandPattern);
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
+	msg = toLoL(msg);
 	msg = toLower(msg);
 
 
@@ -50,6 +51,10 @@ const preprocess = (msg) => {
 	msg = normalize(msg);
 
 	return msg;
+}
+
+const toLoL = (msg) => {
+	return msg.replace(/LoL/g, "league of legends");
 }
 
 const removePattern = (msg, pattern) => {
