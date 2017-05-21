@@ -12,7 +12,7 @@ const tfidf			= new natural.TfIdf();
 
 let bayes;
 
-const total = 440;
+const total = 441;
 
 
 let sAmusing;
@@ -231,9 +231,6 @@ const start = () => {
 	fs.writeFileSync(output, '');
 
 	createMat(svm_options);
-	svm_options.max_passes = 1000;
-	createMat(svm_options);
-
 	console.log('Done!');
 }
 

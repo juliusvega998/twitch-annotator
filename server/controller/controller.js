@@ -17,7 +17,7 @@ const svm_options = {
 	kernel: { type: 'polynomial', c: 5, d: 3},
 }
 
-const filename = 'output.txt';
+const filename = 'output2.txt';
 
 let sAmusing;
 let sNeutral;
@@ -39,7 +39,7 @@ const preprocess = (msg) => {
 	msg = removePattern(msg, commandPattern);
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
-	msg = toLoL(msg);
+	//msg = toLoL(msg);
 	msg = toLower(msg);
 
 
@@ -322,10 +322,10 @@ const init = () => {
 	console.log(data.length + ' training data loaded.');
 
 
-	/*fs.writeFileSync(filename, '');
+	fs.writeFileSync(filename, '');
 	data.forEach((item, index) => {
 		fs.appendFileSync(filename, item.message + '|' + item.classification + '\n');
-	})*/
+	});
 
 	train_bayes(data);
 	train_SVM(data);

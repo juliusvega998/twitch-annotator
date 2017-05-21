@@ -22,7 +22,7 @@
             let classes = JSON.parse(data.data);
             let color;
 
-            $('div#annotator-bayes').html("Naive Bayes")
+            
 
             color = getMaxSentimentColor(classes);
             drawRect(i, amuse_col, svg_bayes);
@@ -41,8 +41,6 @@
         }).done(function(data) {
             let classes = JSON.parse(data.data);
             let color;
-
-            $('div#annotator-svm').html("SVM")
 
             color = getMaxSentimentColor(classes);
             drawRect(i, color, svg_svm);
@@ -127,6 +125,16 @@
             $('div#channel > div.mg-b-2').append('<div id=\'drawer-bayes\'></div>');
             $('div#channel > div.mg-b-2').append('<div id=\'annotator-svm\'></div>');
             $('div#channel > div.mg-b-2').append('<div id=\'drawer-svm\'></div>');
+            $('div#channel > div.mg-b-2').append('<div id=\'legend\'></div>');
+
+            $('div#annotator-bayes').html('Naive Bayes');
+            $('div#annotator-svm').html('SVM');
+            $('div#legend').html('Legend: <br>' + 
+                'Green - Amusing <br />' + 
+                'Gray - Neutral <br />' + 
+                'Blue - Pathetic <br />' + 
+                'Red - Infuriating'
+            );
 
             getMessages(vid_id, 0, 0, 0);
 
