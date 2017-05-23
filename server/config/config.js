@@ -28,7 +28,7 @@ module.exports = {
 	SSL_CERT: fs.readFileSync('/etc/apache2/ssl/localhost.crt'), 	//replace with the path of the SSL Cert
 	SSL_PASSPHRASE: 'onedoesnotsimply', 							//replace with the SSL passphrase
 	emoticons: get_emoticons(),
-	abbreviated: [
+	abbreviated: [ //abbreviations to be extended with long versions
 		{
 			short: 'af',
 			long: 'as fuck',
@@ -169,7 +169,7 @@ module.exports = {
 			long: 'what the hell',
 		}
 	],
-	swears: [
+	swears: [ //list of swear words
 		'fuck',
 		'fucking',
 		'fuckin',
