@@ -9,10 +9,10 @@ module.exports = (router) => {
 
 	router.del = router.delete;
 
-	router.get('/', __.controller.hello);
-	router.post('/preprocess', __.controller.preprocess);
-	router.post('/naive_bayes', __.controller.naive_bayes);
-	router.post('/svm', __.controller.support_vector);
+	router.get('/', __.controller.hello); //used to check if the server is up and running
+	router.post('/preprocess', __.controller.preprocess); //API for preprocessing the chat message
+	router.post('/naive_bayes', __.controller.naive_bayes); //API to classify the chat message using the Naive Bayes Classifier
+	router.post('/svm', __.controller.support_vector); //API to classify the chat message using Support Vector Machine
 
 	return router;
 }

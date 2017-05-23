@@ -9,6 +9,7 @@ const ml 		= require('machine_learning');
 const tfidf			= new natural.TfIdf();
 const bayes 		= new natural.BayesClassifier();
 
+//parameters of SVM
 const svm_options = {
 	C: 10,
 	tol: 1e-5,
@@ -16,8 +17,6 @@ const svm_options = {
 
 	kernel: { type: 'polynomial', c: 5, d: 3},
 }
-
-const filename = 'output2.txt';
 
 let sAmusing;
 let sNeutral;
@@ -28,6 +27,7 @@ let emoticonsDone	= false;
 let emoticonsLoading = false;
 let emoticons;
 
+//preprocesses the chat messages
 const preprocess = (msg) => {
 	let usernamePattern = /@[A-Za-z0-9_]+/g;
 	let commandPattern = /![A-Za-z0-9_\-]+/g;
@@ -39,7 +39,7 @@ const preprocess = (msg) => {
 	msg = removePattern(msg, commandPattern);
 	msg = removePattern(msg, usernamePattern);
 	msg = removePattern(msg, urlPattern);
-	//msg = toLoL(msg);
+	msg = toLoL(msg);
 	msg = toLower(msg);
 
 
@@ -53,18 +53,17 @@ const preprocess = (msg) => {
 	return msg;
 }
 
+//changes LoL to league of legends
 const toLoL = (msg) => {
 	return msg.replace(/LoL/g, "league of legends");
 }
 
+//removes all the strings when matched with a regex pattern
 const removePattern = (msg, pattern) => {
 	return msg.replace(pattern, '');
 }
 
-const replacePattern = (msg, newWord, pattern) => {
-	return msg.replace(pattern, newWord);
-}
-
+//normalizes the text
 const normalize = (msg) => {
 	let words = msg.split(' ');
 	let words2 = [];
@@ -86,14 +85,17 @@ const normalize = (msg) => {
 	return words2.join(' ');
 }
 
+//expands the contractions
 const toExtend = (msg) => {
 	return nlp.text(msg).contractions.expand().text();
 }
 
+//converts the string to lower case characters
 const toLower = (msg) => {
 	return msg.toLowerCase();
 }
 
+//expands the abbreviation to its full word form
 const changeAbbrev = (msg) => {
 	let words = msg.split(' ');
 	let words2 = [];
@@ -115,6 +117,7 @@ const changeAbbrev = (msg) => {
 	return words2.join(' ');
 }
 
+//removes the nouns and articles found
 const removeNounAndArticles = (msg) => {
 	let words = msg.split(' ');
 	let words2 = [];
@@ -126,6 +129,7 @@ const removeNounAndArticles = (msg) => {
 			if(tag[0][0] === 'Determiner') {
 				continue;
 			} else if(tag[0][0] === "Noun") {
+				//checks if the word found is a twitch emoticon
 				for(let k=0; k < emoticons.length; k++) {
 					if(words[j] === emoticons[k].toLowerCase()){
 						words2.push(words[j]);
@@ -133,6 +137,7 @@ const removeNounAndArticles = (msg) => {
 					}
 				}
 
+				//checks if the word found is a swear word
 				for(let k=0; k < config.swears.length; k++) {
 					if(words[j] === config.swears[k].toLowerCase()){
 						words2.push(words[j]);
@@ -162,6 +167,7 @@ const removeNounAndArticles = (msg) => {
 			} else if(tag[0][0] === 'Organization') {
 				continue;
 			} else if(tag[0][0] === 'Value') {
+				//checks if the word found is a twitch emoticon
 				for(let k=0; k < emoticons.length; k++) {
 					if(words[j] === emoticons[k].toLowerCase()){
 						words2.push(words[j]);
@@ -179,12 +185,14 @@ const removeNounAndArticles = (msg) => {
 	}).join(' ');
 }
 
+//returns the classification of the Naive Bayes Classifier
 const naive_classify = (msg) => {
 	let res = [];
 
 	return bayes.classify(msg);
 }
 
+//trains the Naive bayes Classifier
 const train_bayes = (data) => {
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
@@ -197,6 +205,7 @@ const train_bayes = (data) => {
 	console.log('Naive Bayes done training.');
 }
 
+//returns the classification of SVM
 const svm_classify = (msg) => {
 	let arr = tfidf.tfidfs(msg);
 	let prob = [];
@@ -215,8 +224,6 @@ const svm_classify = (msg) => {
 		}
 	}
 
-	//console.log(prob);
-
 	switch(maxIndex) {
 		case 0: return 'amusing';
 		case 1: return 'pathetic';
@@ -225,6 +232,7 @@ const svm_classify = (msg) => {
 	}
 }
 
+//trains the SVM
 const train_SVM = (data) => {
 	let mat = [];
 
@@ -235,11 +243,13 @@ const train_SVM = (data) => {
 
 	let max = 0;
 
+	//adds document to TF-IDF
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 		tfidf.addDocument(msg);
 	}
 
+	//creates the matrix for SVM training data
 	for(let i=0; i<data.length; i++) {
 		let msg = preprocess(data[i].message);
 		let arr = tfidf.tfidfs(msg);
@@ -281,6 +291,7 @@ const train_SVM = (data) => {
 	sPathetic = new ml.SVM({x: mat, y: pathetic_label });
 	sInfuriate = new ml.SVM({x: mat, y: infuriating_label });
 
+	//trains the SVM for each classification
 	sAmusing.train(svm_options);
 	sNeutral.train(svm_options);
 	sPathetic.train(svm_options);
@@ -289,6 +300,7 @@ const train_SVM = (data) => {
 	console.log('SVM done training.');
 }
 
+//loads the twitch emoticons
 const loadEmoticons = (callback) => {
 	config.emoticons.then(
 		(result) => {
@@ -302,6 +314,7 @@ const loadEmoticons = (callback) => {
 	);
 }
 
+//initializes the emoticons and the classifiers
 const init = () => {
 	if(!emoticonsDone) {
 		if(!emoticonsLoading) {
@@ -320,12 +333,6 @@ const init = () => {
 	});
 
 	console.log(data.length + ' training data loaded.');
-
-
-	fs.writeFileSync(filename, '');
-	data.forEach((item, index) => {
-		fs.appendFileSync(filename, item.message + '|' + item.classification + '\n');
-	});
 
 	train_bayes(data);
 	train_SVM(data);

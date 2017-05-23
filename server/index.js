@@ -1,16 +1,19 @@
 'use strict'
 
+/*
+ *	The code for actual server
+ */
+
 const config 		= require(__dirname + '/config/config');
 const body_parser 	= require('body-parser');
 const express 		= require('express');
 const https			= require('https');
-const fs			= require('fs');
 const app 			= express();
 
 const options = {
-	key: fs.readFileSync('/etc/apache2/ssl/localhost.key'),
-	cert: fs.readFileSync('/etc/apache2/ssl/localhost.crt'),
-	passphrase: 'onedoesnotsimply',
+	key: config.SSL_KEY,
+	cert: config.SSL_CERT,
+	passphrase: config.SSL_PASSPHRASE,
 	requestCert: false,
 	rejectUnauthorized: false
 }

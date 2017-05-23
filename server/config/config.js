@@ -1,8 +1,10 @@
 'use strict';
 
-const request = require('superagent');
-const error = require(__dirname + '/error');
+const request 	= require('superagent');
+const error 	= require(__dirname + '/error');
+const fs 		= require('fs');
 
+//gets the updated list of emoticons from TwitchEmotes.com
 const get_emoticons = () => {
 	return new Promise((resolve, reject) => {
 		request
@@ -18,9 +20,13 @@ const get_emoticons = () => {
 	});
 }
 
+//contains the constants used by the web application
 module.exports = {
 	PORT: 3000,
 	IP: '127.0.0.1',
+	SSL_KEY: fs.readFileSync('/etc/apache2/ssl/localhost.key'), 	//replace with the path of the SSL Key
+	SSL_CERT: fs.readFileSync('/etc/apache2/ssl/localhost.crt'), 	//replace with the path of the SSL Cert
+	SSL_PASSPHRASE: 'onedoesnotsimply', 							//replace with the SSL passphrase
 	emoticons: get_emoticons(),
 	abbreviated: [
 		{
